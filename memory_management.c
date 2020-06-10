@@ -61,7 +61,7 @@ void *getNode(int type)
 			nvm_Block_Directory->used_num = 0;
 		}
 		//nvm_Block->used_num++;
-		return &nvm_Block_Directory->data[nvm_Block->used_num++];
+		return &nvm_Block_Directory->data[nvm_Block_Directory->used_num++];
 	case HASH_SEGMENT:;
 		NVMBLOCK(Segment) *nvm_Block_Segment = table[type][mm[type]];
 		if (nvm_Block_Segment->used_num == MEMORY_BLOCK_LEN(Segment))
@@ -70,7 +70,7 @@ void *getNode(int type)
 			nvm_Block_Segment->used_num = 0;
 		}
 		//nvm_Block->used_num++;
-		return &nvm_Block_Segment->data[nvm_Block->used_num++];
+		return &nvm_Block_Segment->data[nvm_Block_Segment->used_num++];
 	default:
 		printf("add_pmalloc: wrong type!\n");
 		return NULL;

@@ -1,4 +1,4 @@
-#include "hash.c"
+#include "hash.h"
 int main(int argc, char *argv[])
 {
     int TEST_NUM = atoi(argv[1]);

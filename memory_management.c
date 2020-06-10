@@ -22,11 +22,11 @@ void *add_pmalloc(int type, size_t size, size_t *mapped_len)
 	{
 	case HASH_DIRECTORY:
 		mm[HASH_DIRECTORY] = __sync_fetch_and_add(&mm[HASH_DIRECTORY], 1);
-		sprintf(path, "/mnt/dax/DIRECTORY_%d", mm[HASH_DIRECTORY]);
+		sprintf(path, "DIRECTORY_%d", mm[HASH_DIRECTORY]);
 		break;
 	case HASH_SEGMENT:
 		mm[HASH_SEGMENT] = __sync_fetch_and_add(&mm[HASH_SEGMENT], 1);
-		sprintf(path, "/mnt/dax/SEGMENT_%d", mm[HASH_SEGMENT]);
+		sprintf(path, "SEGMENT_%d", mm[HASH_SEGMENT]);
 		break;
 	// case ARRAY:
 	// 	mm[ARRAY] = __sync_fetch_and_add(&mm[ARRAY], 1);

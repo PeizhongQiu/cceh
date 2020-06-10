@@ -75,6 +75,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         {
             dir->_->_[i] = dir->_->_[i - (1 << (dir->global_depth))];
         }
+        dir->_->_[(1 << dir->global_depth) + x] = new_Segment;
         pmem_persist(dir->_, sizeof(Directory));
         mfence();
         //printf("New Dir ok\n");

@@ -22,7 +22,7 @@ typedef unsigned int u32;
 typedef signed long long s64;
 typedef unsigned long long u64;
 
-const Value_t NONE = 0x0;
+extern const Value_t NONE;
 
 typedef struct Pair
 {
@@ -58,5 +58,11 @@ Value_t search_hash(HASH *dir, Key_t search_key);
 int delete_hash(HASH *dir, Key_t search_key);
 int insert_hash(HASH *dir, Key_t new_key, Value_t new_value);
 
+extern const Key_t INVALID; 
+extern const size_t kMask;
+extern const size_t kShift;
+extern const size_t kSegmentSize;
+extern const size_t kNumPairPerCacheLine;
+extern const size_t kNumCacheLine;
 
 #endif

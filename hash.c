@@ -8,6 +8,7 @@ const size_t kShift = kSegmentBits;
 const size_t kSegmentSize = (1 << kSegmentBits) * 16 * 16;
 const size_t kNumPairPerCacheLine = 4;
 const size_t kNumCacheLine = 4;
+const Value_t NONE = 0x0;
 
 u32 hash_32(u32 val, unsigned int bits)
 {

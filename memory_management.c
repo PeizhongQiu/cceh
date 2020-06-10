@@ -90,3 +90,9 @@ void *getNvmBlock(int type)
 	table[type][mm[type]] = newBlock;
 	return newBlock;
 }
+
+void mfence()
+{
+    asm volatile("mfence" ::
+                     : "memory");
+}

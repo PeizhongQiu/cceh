@@ -25,7 +25,13 @@
         type data[MEMORY_BLOCK_LEN(type)];   \
 		unsigned int used_num;	\
     }
+
+#define asm_mfence()                \
+({                      \
+    __asm__ __volatile__ ("mfence":::"memory");    \
+})
+
 void *getNvmBlock(int type);
 void *getNode(int type);
-
+void mfence(void);
 #endif

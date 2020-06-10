@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     printf("insert begin \n");
     srand(NULL);
-    for (i = TEST_NUM - 1; i >= 0; --i)
+    for (i = 0; i < TEST_NUM; ++i)
     {
         u32 temp = a[i];
         u32 j = rand() % TEST_NUM;

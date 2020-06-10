@@ -80,7 +80,7 @@ void *getNode(int type)
 void *getNvmBlock(int type)
 {
 	size_t mapped_len;
-	void *newBlock = add_pmalloc(type, 4 * 1024 * 1024, &mapped_len);
+	void *newBlock = add_pmalloc(type, BLOCK_SIZE, &mapped_len);
 	if (!newBlock)
 	{
 		printf("newBlock creation fails: nvm\n");

@@ -44,7 +44,7 @@ typedef struct Segment
 
 typedef struct Directory
 {
-    Segment *_[2048];
+    Segment *_[4096];   //一次分配，减少对持久性存储的写，根据glabal_depth确定可使用的大小
 } Directory;
 
 typedef struct HASH

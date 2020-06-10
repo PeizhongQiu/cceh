@@ -55,7 +55,7 @@ void *getNode(int type)
 	{
 	case HASH_DIRECTORY:;
 		NVMBLOCK(Directory) *nvm_Block_Directory = table[type][mm[type]];
-		if (nvm_Block_Directory->used_num == MEMORY_BLOCK_LEN(Directory))
+		if (nvm_Block_Directory == NULL || nvm_Block_Directory->used_num == MEMORY_BLOCK_LEN(Directory))
 		{
 			nvm_Block_Directory = getNvmBlock(type);
 			nvm_Block_Directory->used_num = 0;
@@ -64,7 +64,7 @@ void *getNode(int type)
 		return &nvm_Block_Directory->data[nvm_Block_Directory->used_num++];
 	case HASH_SEGMENT:;
 		NVMBLOCK(Segment) *nvm_Block_Segment = table[type][mm[type]];
-		if (nvm_Block_Segment->used_num == MEMORY_BLOCK_LEN(Segment))
+		if (nvm_Block_Directory == NULL || nvm_Block_Segment->used_num == MEMORY_BLOCK_LEN(Segment))
 		{
 			nvm_Block_Segment = getNvmBlock(type);
 			nvm_Block_Segment->used_num = 0;

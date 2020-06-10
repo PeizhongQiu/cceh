@@ -58,11 +58,11 @@ Value_t search_hash(HASH *dir, Key_t search_key);
 int delete_hash(HASH *dir, Key_t search_key);
 int insert_hash(HASH *dir, Key_t new_key, Value_t new_value);
 
-extern const Key_t INVALID; 
-extern const size_t kMask;
-extern const size_t kShift;
-extern const size_t kSegmentSize;
-extern const size_t kNumPairPerCacheLine;
-extern const size_t kNumCacheLine;
-
+#define INVALID -1
+#define kMask ((1 << kSegmentBits) - 1)
+#define kShift kSegmentBits
+#define kSegmentSize ((1 << kSegmentBits) * 16 * 16)
+#define kNumPairPerCacheLine 4
+#define kNumCacheLine 4
+#define NONE 0x0
 #endif

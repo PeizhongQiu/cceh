@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MALLOC_TYPE 2
+#define HASH_TYPE 2
 // #define ARRAY 0
 #define HASH_SEGMENT 0
 #define HASH_DIRECTORY 1

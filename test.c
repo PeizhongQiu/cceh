@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     {
         printf("insert %x \n", a[i]);
         int ok = insert_hash(&o_hash, a[i], i + 1);
+        printf("%d\n",o_hash.global_depth);
         if (ok == -1)
         {
             printf("insert %x error1\n", a[i]);

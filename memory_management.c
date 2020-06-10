@@ -54,23 +54,23 @@ void *getNode(int type)
 	switch (type)
 	{
 	case HASH_DIRECTORY:;
-		NVMBLOCK(Directory) *nvm_Block = table[type][mm[type]];
-		if (nvm_Block->used_num == MEMORY_BLOCK_LEN(Directory))
+		NVMBLOCK(Directory) *nvm_Block_Directory = table[type][mm[type]];
+		if (nvm_Block_Directory->used_num == MEMORY_BLOCK_LEN(Directory))
 		{
-			nvm_Block = getNvmBlock(type);
-			nvm_Block->used_num = 0;
+			nvm_Block_Directory = getNvmBlock(type);
+			nvm_Block_Directory->used_num = 0;
 		}
 		//nvm_Block->used_num++;
-		return &nvm_Block->data[nvm_Block->used_num++];
+		return &nvm_Block_Directory->data[nvm_Block->used_num++];
 	case HASH_SEGMENT:;
-		NVMBLOCK(Segment) *nvm_Block = table[type][mm[type]];
-		if (nvm_Block->used_num == MEMORY_BLOCK_LEN(Segment))
+		NVMBLOCK(Segment) *nvm_Block_Segment = table[type][mm[type]];
+		if (nvm_Block_Segment->used_num == MEMORY_BLOCK_LEN(Segment))
 		{
-			nvm_Block = getNvmBlock(type);
-			nvm_Block->used_num = 0;
+			nvm_Block_Segment = getNvmBlock(type);
+			nvm_Block_Segment->used_num = 0;
 		}
 		//nvm_Block->used_num++;
-		return &nvm_Block->data[nvm_Block->used_num++];
+		return &nvm_Block_Segment->data[nvm_Block->used_num++];
 	default:
 		printf("add_pmalloc: wrong type!\n");
 		return NULL;

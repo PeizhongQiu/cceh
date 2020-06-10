@@ -2,13 +2,13 @@
 #include "memory_management.h"
 
 //const Key_t SENTINEL = -2; // 11111...110
-const Key_t INVALID = -1; // 11111...111
-const size_t kMask = (1 << kSegmentBits) - 1;
-const size_t kShift = kSegmentBits;
-const size_t kSegmentSize = (1 << kSegmentBits) * 16 * 16;
-const size_t kNumPairPerCacheLine = 4;
-const size_t kNumCacheLine = 4;
-const Value_t NONE = 0x0;
+extern const Key_t INVALID = -1; // 11111...111
+extern const size_t kMask = (1 << kSegmentBits) - 1;
+extern const size_t kShift = kSegmentBits;
+extern const size_t kSegmentSize = (1 << kSegmentBits) * 16 * 16;
+extern const size_t kNumPairPerCacheLine = 4;
+extern const size_t kNumCacheLine = 4;
+extern const Value_t NONE = 0x0;
 
 u32 hash_32(u32 val, unsigned int bits)
 {

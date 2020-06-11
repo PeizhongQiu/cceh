@@ -34,13 +34,13 @@ int main(int argc, char *argv[])
         int j;
         for (j = 0; j < i; ++j)
         {
-            printf("search %x \n", a[j]);
             if (search_hash(&o_hash, a[j]) != (j + 1))
             {
-                printf("insert %x error search_result=%x\n", a[j], search_hash(&o_hash, a[j]));
+                print(&o_hash);
+                printf("search %x error search_result=%x\n", a[j], search_hash(&o_hash, a[j]));
                 return 0;
             }
-            printf("search %x ok\n", a[j]);
+            //printf("search %x ok\n", a[j]);
         }
     }
     printf("insert all over\n");

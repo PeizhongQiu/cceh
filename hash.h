@@ -57,6 +57,7 @@ void init(HASH *o_hash);
 Value_t search_hash(HASH *dir, Key_t search_key);
 int delete_hash(HASH *dir, Key_t search_key);
 int insert_hash(HASH *dir, Key_t new_key, Value_t new_value);
+void print(HASH *dir);
 
 #define INVALID -1
 #define kMask ((1 << kSegmentBits) - 1)

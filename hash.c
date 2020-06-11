@@ -7,6 +7,23 @@ u32 hash_32(u32 val, unsigned int bits)
     return hash >> (32 - bits);
 }
 
+void print(HASH *dir)
+{
+    printf("%d\n", dir->global_depth);
+    int i;
+    for (i = 0; i < (1 << dir->global_depth); ++i)
+    {
+        printf("%d  %p  ", i, dir->_->_[i]);
+        Segment *dir_ = dir->_->_[i];
+        int j;
+        for (j = 0; j < kNumSlot; ++j)
+        {
+            printf("%ux  ",dir_->_[j]);
+        }
+        printf("\n");
+    }
+}
+
 int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 {
     u32 key_hash = hash_32(new_key, 32);

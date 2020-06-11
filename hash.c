@@ -55,13 +55,13 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     if (dir_->local_depth == dir->global_depth)
     {
         //分配一个新的Segment
-        //printf("split 1 begin...\n");
+        printf("split 1 begin...\n");
         Segment *new_Segment = getNode(HASH_SEGMENT);
         memset(new_Segment, -1, sizeof(struct Segment));
 
         new_Segment->pattern = (1 << dir_->local_depth) + dir_->pattern;
         new_Segment->local_depth = dir_->local_depth + 1;
-        //printf("new_Segment=%p, local_depth=%d, pattern=%d\n", new_Segment,new_Segment->local_depth,new_Segment->pattern);
+        printf("new_Segment=%p, local_depth=%d, pattern=%d\n", new_Segment,new_Segment->local_depth,new_Segment->pattern);
 
         for (i = 0; i < kNumSlot; ++i)
         {
@@ -71,7 +71,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
                 u32 pattern = re_hash_key & (1 << new_Segment->local_depth - 1);
                 if (pattern == new_Segment->pattern)
                 {
-                    //printf("rehash_key = %x pattern = %x", re_hash_key, pattern);
+                    printf("rehash_key = %x pattern = %x", re_hash_key, pattern);
                     u32 Segment_index = (re_hash_key >> (key_size - kSegmentBits)) * kNumPairPerCacheLine * kNumCacheLine;
                     unsigned j;
                     for (j = 0; j < kNumPairPerCacheLine * kNumCacheLine; ++j)
@@ -114,7 +114,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     }
     else
     {
-        //printf("split 2 begin...\n");
+        printf("split 2 begin...\n");
         Segment *new_Segment = getNode(HASH_SEGMENT);
         memset(new_Segment, -1, sizeof(struct Segment));
         new_Segment->pattern = (1 << dir_->local_depth) + dir_->pattern;

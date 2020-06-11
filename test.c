@@ -25,11 +25,22 @@ int main(int argc, char *argv[])
     {
         printf("insert %x \n", a[i]);
         int ok = insert_hash(&o_hash, a[i], i + 1);
-        printf("%d\n",o_hash.global_depth);
+        printf("%d\n", o_hash.global_depth);
         if (ok == -1)
         {
             printf("insert %x error1\n", a[i]);
             return 0;
+        }
+        int j;
+        for (j = 0; j < i; ++j)
+        {
+            printf("search %x \n", a[j]);
+            if (search_hash(&o_hash, a[j]) != (j + 1))
+            {
+                printf("insert %x error search_result=%x\n", a[j], search_hash(&o_hash, a[j]));
+                return 0;
+            }
+            printf("search %x ok\n", a[j]);
         }
     }
     printf("insert all over\n");

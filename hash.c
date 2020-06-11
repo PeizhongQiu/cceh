@@ -10,17 +10,22 @@ u32 hash_32(u32 val, unsigned int bits)
 void print(HASH *dir)
 {
     printf("%d\n", dir->global_depth);
-    int i;
+    int i, j;
     for (i = 0; i < (1 << dir->global_depth); ++i)
     {
-        printf("%d  %p  ", i, dir->_->_[i]);
-        Segment *dir_ = dir->_->_[i];
-        int j;
-        for (j = 0; j < kNumSlot; ++j)
+        printf("%p  ", dir->_->_[i]);
+    }
+    printf("\n");
+    for (j = 0; j < kNumSlot; ++j)
+    {
+        for (i = 0; i < (1 << dir->global_depth); ++i)
         {
-            printf("%x  ",dir_->_[j]);
+            Segment *dir_ = dir->_->_[i];
+
+            printf("(%x, %x)  ", dir_->_[j].key, hash_32(dir_->_[j].key, 32));
+
+            printf("\n");
         }
-        printf("\n");
     }
 }
 

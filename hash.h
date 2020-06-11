@@ -30,7 +30,7 @@ typedef struct Pair
     Value_t value;
 } Pair;
 
-#define kSegmentBits 8
+#define kSegmentBits 2
 #define kNumSlot ((1 << kSegmentBits) * 16 * 16 / sizeof(Pair))
 #define key_size (8 * sizeof(u32))
 

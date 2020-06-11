@@ -159,7 +159,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         pmem_persist(dir->_, sizeof(Directory));
         mfence();
         ++dir_->local_depth;
-        dir_->pattern = dir_->pattern << 1;
+        //dir_->pattern = dir_->pattern << 1;
         /*printf("new_Segment %p\n", new_Segment);
 		for (i = 0; i < (1 << dir->global_depth); ++i) {
 			printf("%p\n", dir->_->_[i]);

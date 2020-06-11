@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
             printf("insert %x error1\n", a[i]);
             return 0;
         }
-        //print(&o_hash);
+        print(&o_hash);
         int j;
         for (j = 0; j < i; ++j)
         {

@@ -109,7 +109,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         mfence();
         //printf("new_Segment %p\n", new_Segment);
 		for (i = 0; i < (1 << dir->global_depth); ++i) {
-			printf("%p\n", dir->_->_[i]);
+			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}
         //printf("insert again\n");
     }
@@ -148,6 +148,9 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         }
         pmem_persist(new_Segment, sizeof(new_Segment));
         mfence();
+        for (i = 0; i < (1 << dir->global_depth); ++i) {
+			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
+		}
 
         unsigned int tail = new_Segment->pattern;
         while (tail < (1 << dir->global_depth))
@@ -163,7 +166,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         //dir_->pattern = dir_->pattern << 1;
         //printf("new_Segment %p\n", new_Segment);
 		for (i = 0; i < (1 << dir->global_depth); ++i) {
-			printf("%p\n", dir->_->_[i]);
+			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}
         //printf("insert_again\n");
         pmem_persist(dir_, sizeof(Segment));

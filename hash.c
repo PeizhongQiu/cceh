@@ -120,13 +120,14 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}
         Segment *new_Segment = getNode(HASH_SEGMENT);
+        for (i = 0; i < (1 << dir->global_depth); ++i) {
+			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
+		}
         memset(new_Segment, -1, sizeof(struct Segment));
         new_Segment->pattern = (1 << dir_->local_depth) + dir_->pattern;
         new_Segment->local_depth = dir_->local_depth + 1;
         printf("new_Segment=%p, local_depth=%d, pattern=%d\n", new_Segment,new_Segment->local_depth,new_Segment->pattern);
-        for (i = 0; i < (1 << dir->global_depth); ++i) {
-			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
-		}
+        
         for (i = 0; i < kNumSlot; ++i)
         {
             if (dir_->_[i].key != INVALID)

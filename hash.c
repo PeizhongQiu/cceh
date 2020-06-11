@@ -22,10 +22,10 @@ void print(HASH *dir)
         {
             Segment *dir_ = dir->_->_[i];
 
-            printf("(%x, %x)  ", dir_->_[j].key, hash_32(dir_->_[j].key, 32));
-
+            printf("(%08x, %08x)", dir_->_[j].key, hash_32(dir_->_[j].key, 32));
+	}
             printf("\n");
-        }
+        
     }
 }
 

@@ -18,7 +18,7 @@ void print(HASH *dir)
         int j;
         for (j = 0; j < kNumSlot; ++j)
         {
-            printf("%ux  ",dir_->_[j]);
+            printf("%x  ",dir_->_[j]);
         }
         printf("\n");
     }

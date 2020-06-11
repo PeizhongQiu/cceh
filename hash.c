@@ -13,7 +13,7 @@ void print(HASH *dir)
     int i, j;
     for (i = 0; i < (1 << dir->global_depth); ++i)
     {
-        printf("(%08d, %08p)", dir->_->_[i]->pattern, dir->_->_[i]->pattern);
+        printf("(%08d, %08p)", dir->_->_[i]->pattern, dir->_->_[i]);
     }
     printf("\n");
     for (j = 0; j < kNumSlot; ++j)

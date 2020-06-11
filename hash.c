@@ -13,7 +13,7 @@ void print(HASH *dir)
     int i, j;
     for (i = 0; i < (1 << dir->global_depth); ++i)
     {
-        printf("%p  ", dir->_->_[i]);
+        printf("(%08d, %08p)", dir->_->_[i]->pattern, dir->_->_[i]->pattern);
     }
     printf("\n");
     for (j = 0; j < kNumSlot; ++j)
@@ -23,9 +23,8 @@ void print(HASH *dir)
             Segment *dir_ = dir->_->_[i];
 
             printf("(%08x, %08x)", dir_->_[j].key, hash_32(dir_->_[j].key, 32));
-	}
-            printf("\n");
-        
+        }
+        printf("\n");
     }
 }
 

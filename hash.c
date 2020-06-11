@@ -68,7 +68,8 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
             if (dir_->_[i].key != INVALID)
             {
                 u32 re_hash_key = hash_32(dir_->_[i].key, 32);
-                u32 pattern = re_hash_key & (1 << new_Segment->local_depth - 1);
+                u32 pattern = re_hash_key & ((1 << new_Segment->local_depth) - 1);
+		printf("rehash_key = %x pattern = %x\n",re_hash_key, pattern);
                 if (pattern == new_Segment->pattern)
                 {
                     printf("rehash_key = %x pattern = %x", re_hash_key, pattern);

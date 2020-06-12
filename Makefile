@@ -1,7 +1,7 @@
 all: dynamic_hash
 
 dynamic_hash: test.o memory_management.o hash.o 
-	gcc -g -o dynamic_hash test.o memory_management.o hash.o -lm -lpthread -lpmem
+	gcc -g  -o dynamic_hash test.o memory_management.o hash.o -lm -lpthread -lpmem
 test.o : test.c hash.h
 	gcc -g -c test.c
 

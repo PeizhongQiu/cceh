@@ -12,7 +12,7 @@
 #define _nvmb_union
 #define _nvmb_enum
 
-#define BLOCK_SIZE (4*1024*1024)
+#define BLOCK_SIZE (32*1024*1024)
 
 #define MEMORY_BLOCK_LEN(type) ((BLOCK_SIZE - sizeof(unsigned int)) / sizeof(type))
 

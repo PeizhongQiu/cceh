@@ -30,7 +30,7 @@ typedef struct Pair
     Value_t value;
 } Pair;
 
-#define kSegmentBits 2
+#define kSegmentBits 16
 #define kNumSlot ((1 << kSegmentBits) * 16 * 16 / sizeof(Pair))
 #define key_size (8 * sizeof(u32))
 
@@ -44,7 +44,7 @@ typedef struct Segment
 
 typedef struct Directory
 {
-    Segment *_[4096];   //一次分配，减少对持久性存储的写，根据glabal_depth确定可使用的大小
+    Segment *_[32*1024];   //一次分配，减少对持久性存储的写，根据glabal_depth确定可使用的大小
 } Directory;
 
 typedef struct HASH

@@ -1,4 +1,5 @@
 #include "hash.h"
+#include <time.h>
 int main(int argc, char *argv[])
 {
     int TEST_NUM = atoi(argv[1]);
@@ -20,17 +21,21 @@ int main(int argc, char *argv[])
         a[i] = a[j];
         a[j] = temp;
     }
-
+    struct timeval start, end;
+	long long time_consumption = 0;
+    mfence();
+    gettimeofday(&start,NULL);
+    mfence();
     for (i = 0; i < TEST_NUM; ++i)
     {
         //printf("insert %x \n", a[i]);
         int ok = insert_hash(&o_hash, a[i], i + 1);
         //printf("%d\n", o_hash.global_depth);
-        if (ok == -1)
-        {
-            //printf("insert %x error1\n", a[i]);
-            return 0;
-        }
+        // if (ok == -1)
+        // {
+        //     //printf("insert %x error1\n", a[i]);
+        //     return 0;
+        // }
         //print(&o_hash);
         /*int j;
         for (j = 0; j < i; ++j)
@@ -43,6 +48,12 @@ int main(int argc, char *argv[])
             //printf("search %x ok\n", a[j]);
         }*/
     }
+    mfence();
+    gettimeofday(&end,NULL);
+    mfence();
+    time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+	printf("time_consumption of insert is %lld\n", time_consumption);
+
     printf("insert all over\n");
     int j;
     for (j = 0; j < TEST_NUM; ++j)

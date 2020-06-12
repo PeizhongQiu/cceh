@@ -70,7 +70,7 @@ void *getNode(int type)
 			nvm_Block_Segment = getNvmBlock(type);
 			nvm_Block_Segment->used_num = 0;
 		}
-		printf("%u %u\n",nvm_Block_Segment->used_num,MEMORY_BLOCK_LEN(Segment));
+		//printf("%u %u\n",nvm_Block_Segment->used_num,MEMORY_BLOCK_LEN(Segment));
 		//nvm_Block->used_num++;
 		return &nvm_Block_Segment->data[nvm_Block_Segment->used_num++];
 	default:

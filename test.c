@@ -56,6 +56,9 @@ int main(int argc, char *argv[])
 
     printf("insert all over\n");
     int j;
+    mfence();
+    gettimeofday(&start,NULL);
+    mfence();
     for (j = 0; j < TEST_NUM; ++j)
     {
         //printf("search %x \n", a[j]);
@@ -66,5 +69,10 @@ int main(int argc, char *argv[])
         }
         //printf("search %x ok\n", a[j]);
     }
+    mfence();
+    gettimeofday(&end,NULL);
+    mfence();
+    time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+	printf("time_consumption of search is %lld\n", time_consumption);
     return 0;
 }

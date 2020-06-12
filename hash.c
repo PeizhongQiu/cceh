@@ -119,6 +119,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         for (i = 0; i < (1 << dir->global_depth); ++i) {
 			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}
+        //TODO:getNode ERROR
         Segment *new_Segment = getNode(HASH_SEGMENT);
         for (i = 0; i < (1 << dir->global_depth); ++i) {
 			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);

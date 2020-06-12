@@ -21,11 +21,11 @@ void *add_pmalloc(int type, size_t size, size_t *mapped_len)
 	switch (type)
 	{
 	case HASH_DIRECTORY:
-		mm[HASH_DIRECTORY] = __sync_fetch_and_add(&mm[HASH_DIRECTORY], 1);
+		mm[HASH_DIRECTORY]++;
 		sprintf(path, "DIRECTORY_%d", mm[HASH_DIRECTORY]);
 		break;
 	case HASH_SEGMENT:
-		mm[HASH_SEGMENT] = __sync_fetch_and_add(&mm[HASH_SEGMENT], 1);
+		mm[HASH_SEGMENT]++;
 		sprintf(path, "SEGMENT_%d", mm[HASH_SEGMENT]);
 		break;
 	// case ARRAY:
@@ -64,11 +64,13 @@ void *getNode(int type)
 		return &nvm_Block_Directory->data[nvm_Block_Directory->used_num++];
 	case HASH_SEGMENT:;
 		NVMBLOCK(Segment) *nvm_Block_Segment = table[type][mm[type]];
+		
 		if (nvm_Block_Segment == NULL || nvm_Block_Segment->used_num == MEMORY_BLOCK_LEN(Segment))
 		{
 			nvm_Block_Segment = getNvmBlock(type);
 			nvm_Block_Segment->used_num = 0;
 		}
+		printf("%u %u\n",nvm_Block_Segment->used_num,MEMORY_BLOCK_LEN(Segment));
 		//nvm_Block->used_num++;
 		return &nvm_Block_Segment->data[nvm_Block_Segment->used_num++];
 	default:

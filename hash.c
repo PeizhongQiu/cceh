@@ -128,6 +128,9 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
                 new_dir->_[i * 2 + 1] = dir->_->_[i];
             }
         }
+	free(dir->_->_);
+	free(dir->_);
+	dir->_=NULL;
         dir->_ = new_dir;
         pmem_persist(dir->_, sizeof(Directory));
         mfence();

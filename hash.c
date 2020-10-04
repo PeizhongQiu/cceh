@@ -1,20 +1,27 @@
 #include "hash.h"
 #include "memory_management.h"
 
-size_t hash_64(const void* _ptr, size_t _len){
-  size_t i = 0;
-  size_t hash = 0;
-  const char* key = (const char*)(_ptr);
-  while (i != _len) {
-    hash += key[i];
-    i++;
-    hash += hash << (10);
-    hash ^= hash >> (6);
-  }
-  hash += hash << (3);
-  hash ^= hash >> (11);
-  hash += hash << (15);
-  return hash;
+u64 hash_64(u64 val, unsigned int bits)
+{
+    u64 hash = val;
+ 
+    /*  Sigh, gcc can't optimise this alone like it does for 32 bits. */
+    u64 n = hash;
+    n <<= 18;
+    hash -= n;
+    n <<= 33;
+    hash -= n;
+    n <<= 3;
+    hash += n;
+    n <<= 3;
+    hash -= n;
+    n <<= 4;
+    hash += n;
+    n <<= 2;
+    hash += n;
+ 
+    /* High bits are more random, so use them. */
+    return hash >> (64 - bits);
 }
 
 void print(HASH *dir)
@@ -32,7 +39,7 @@ void print(HASH *dir)
         {
             Segment *dir_ = dir->_->_[i];
 
-            printf("(%08x, %08x)", dir_->_[j].key, hash_64(&dir_->_[j].key, 8));
+            printf("(%08x, %08x)", dir_->_[j].key, hash_64(dir_->_[j].key, 64));
         }
         printf("\n");
     }
@@ -40,7 +47,7 @@ void print(HASH *dir)
 
 int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 {
-    Key_t key_hash = hash_64(&new_key, 8);
+    Key_t key_hash = hash_64(new_key, 64);
 
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
@@ -52,7 +59,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         u64 slot = (y + i) % kNumSlot;
         //printf("slot = %x slot.key = %x\n",slot,dir_->_[slot].key);
         if (dir_->_[slot].key == INVALID ||
-            (hash_64(&dir_->_[slot].key, 8) >> (key_size - dir_->local_depth)) != dir_->pattern)
+            (hash_64(dir_->_[slot].key, 64) >> (key_size - dir_->local_depth)) != dir_->pattern)
         {
             dir_->_[slot].value = new_value;
             dir_->_[slot].key = new_key;
@@ -77,7 +84,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         {
             if (dir_->_[i].key != INVALID)
             {
-                Key_t re_hash_key = hash_64(&dir_->_[i].key, 8);
+                Key_t re_hash_key = hash_64(dir_->_[i].key, 64);
                 size_t pattern = re_hash_key >> (key_size - new_Segment->local_depth);
 		        //printf("rehash_key = %x pattern = %x\n",re_hash_key, pattern);
                 if (pattern == new_Segment->pattern)
@@ -163,7 +170,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         {
             if (dir_->_[i].key != INVALID)
             {
-                Key_t re_hash_key = hash_64(dir_->_[i].key, 8);
+                Key_t re_hash_key = hash_64(dir_->_[i].key, 64);
                 size_t pattern = re_hash_key >> (key_size - new_Segment->local_depth);
                 if (pattern == new_Segment->pattern)
                 {
@@ -212,7 +219,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
 int delete_hash(HASH *dir, Key_t search_key)
 {
-    Key_t key_hash = hash_64(&search_key, 8);
+    Key_t key_hash = hash_64(search_key, 64);
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
 
@@ -235,7 +242,7 @@ int delete_hash(HASH *dir, Key_t search_key)
 
 Value_t search_hash(HASH *dir, Key_t search_key)
 {
-    Key_t key_hash = hash_64(&search_key, 8);
+    Key_t key_hash = hash_64(search_key, 64);
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
 

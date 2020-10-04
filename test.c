@@ -2,22 +2,25 @@
 #include <time.h>
 int main(int argc, char *argv[])
 {
-    int TEST_NUM = atoi(argv[1]);
+    long long TEST_NUM = atoi(argv[1]);
+	long long radio = atoi(argv[2]);
     printf("This test insert number is :%d\n", TEST_NUM);
+    printf("This test radio is:%d\n", radio);
+    long long SEARCH_NUM = TEST_NUM * 10 / radio;
     printf("insert begin \n");
     HASH o_hash; //origin hash
     init(&o_hash);
-    u32 *a = malloc(sizeof(u32) * TEST_NUM);
+    u32 *a = malloc(sizeof(u32) * SEARCH_NUM);
     u32 i;
-    for (i = 0; i < TEST_NUM; ++i)
+    for (i = 0; i < SEARCH_NUM; ++i)
         a[i] = i;
 
     printf("insert begin \n");
     srand(NULL);
-    for (i = 0; i < TEST_NUM; ++i)
+    for (i = 0; i < SEARCH_NUM; ++i)
     {
         u32 temp = a[i];
-        u32 j = rand() % TEST_NUM;
+        u32 j = rand() % SEARCH_NUM;
         a[i] = a[j];
         a[j] = temp;
     }
@@ -59,14 +62,10 @@ int main(int argc, char *argv[])
     mfence();
     gettimeofday(&start,NULL);
     mfence();
-    for (j = 0; j < TEST_NUM; ++j)
+    for (j = 0; j < SEARCH_NUM; ++j)
     {
         //printf("search %x \n", a[j]);
-        if (search_hash(&o_hash, a[j]) != (j + 1))
-        {
-            printf("insert %x error search_result=%x\n", a[j], search_hash(&o_hash, a[j]));
-            return 0;
-        }
+        search_hash(&o_hash, a[j]);
         //printf("search %x ok\n", a[j]);
     }
     mfence();

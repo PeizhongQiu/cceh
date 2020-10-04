@@ -5,7 +5,6 @@
 #include <stdint.h>
 
 #define kCacheLineSize (64)
-#define GOLDEN_RATIO_PRIME_32 0x9e370001UL
 
 typedef size_t Key_t;
 //typedef const char *Value_t;
@@ -30,9 +29,14 @@ typedef struct Pair
     Value_t value;
 } Pair;
 
-#define kSegmentBits 16
-#define kNumSlot ((1 << kSegmentBits) * 16 * 16 / sizeof(Pair))
-#define key_size (8 * sizeof(u32))
+#define kSegmentBits 8
+#define kMask ((1 << kSegmentBits) - 1)
+#define kShift kSegmentBits
+#define kSegmentSize ((1 << kSegmentBits) * 16 * 4)
+#define kNumPairPerCacheLine 4
+#define kNumCacheLine 1
+#define kNumSlot ((1 << kSegmentBits) * 4 * 16 / sizeof(Pair))
+#define key_size (8 * sizeof(size_t))
 
 typedef struct Segment
 {
@@ -44,7 +48,7 @@ typedef struct Segment
 
 typedef struct Directory
 {
-    Segment *_[32*1024];   //一次分配，减少对持久性存储的写，根据glabal_depth确定可使用的大小
+    Segment **_;   
 } Directory;
 
 typedef struct HASH
@@ -60,10 +64,5 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value);
 void print(HASH *dir);
 
 #define INVALID -1
-#define kMask ((1 << kSegmentBits) - 1)
-#define kShift kSegmentBits
-#define kSegmentSize ((1 << kSegmentBits) * 16 * 16)
-#define kNumPairPerCacheLine 4
-#define kNumCacheLine 4
 #define NONE 0x0
 #endif

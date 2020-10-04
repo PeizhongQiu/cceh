@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
     printf("insert begin \n");
     HASH o_hash; //origin hash
     init(&o_hash);
-    u32 *a = malloc(sizeof(u32) * SEARCH_NUM);
-    u32 i;
+    u64 *a = malloc(sizeof(u64) * SEARCH_NUM);
+    u64 i;
     for (i = 0; i < SEARCH_NUM; ++i)
         a[i] = i;
 

@@ -51,7 +51,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
-    //printf("key = %x, key_hash = %x, x = %x, y = %x global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
+    printf("key = %x, key_hash = %x, x = %x, y = %x global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
     Segment *dir_ = dir->_->_[x];
     unsigned i;
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)

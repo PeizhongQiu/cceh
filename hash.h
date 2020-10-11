@@ -29,7 +29,7 @@ typedef struct Pair
     Value_t value;
 } Pair;
 
-#define kSegmentBits 4
+#define kSegmentBits 2
 #define kMask ((1 << kSegmentBits) - 1)
 #define kShift kSegmentBits
 #define kSegmentSize ((1 << kSegmentBits) * 16 * 4)

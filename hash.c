@@ -30,7 +30,7 @@ void print(HASH *dir)
     int i, j;
     for (i = 0; i < (1 << dir->global_depth); ++i)
     {
-        printf("(%016d, %016p)", dir->_->_[i]->pattern, dir->_->_[i]);
+        printf("(%016llx, %016p)", dir->_->_[i]->pattern, dir->_->_[i]);
     }
     printf("\n");
     for (j = 0; j < kNumSlot; ++j)
@@ -39,7 +39,7 @@ void print(HASH *dir)
         {
             Segment *dir_ = dir->_->_[i];
 
-            printf("(%016x, %016x)", dir_->_[j].key, hash_64(dir_->_[j].key));
+            printf("(%016llx, %016llx)", dir_->_[j].key, hash_64(dir_->_[j].key));
         }
         printf("\n");
     }
@@ -51,7 +51,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
-    printf("key = %016x, key_hash = %016x, x = %016x, y = %016x global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
+    printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
     Segment *dir_ = dir->_->_[x];
     unsigned i;
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)

@@ -278,7 +278,7 @@ Value_t search_hash(HASH *dir, Key_t search_key)
 void init(HASH *o_hash)
 {
     o_hash->global_depth = 1;
-    o_hash->_ = getnode(HASH_DIRECTORY);
+    o_hash->_ = getNode(HASH_DIRECTORY);
     Directory *init_dir = o_hash->_;
     
     init_dir->_[0] = getNode(HASH_SEGMENT);

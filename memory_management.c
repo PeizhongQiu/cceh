@@ -61,7 +61,7 @@ void *getNode(int type)
 			nvm_Block_Directory->used_num = 0;
 		}
 		//nvm_Block->used_num++;
-		return &nvm_Block_Directory->data[nvm_Block_Directory->used_num++];
+		return &nvm_Block_Directory->data[(nvm_Block_Directory->used_num++)%2];
 	case HASH_SEGMENT:;
 		NVMBLOCK(Segment) *nvm_Block_Segment = table[type][mm[type]];
 		

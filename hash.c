@@ -1,10 +1,10 @@
 #include "hash.h"
 #include "memory_management.h"
 
-u64 hash_64(u64 val, unsigned int bits)
+u64 hash_64(u64 val)
 {
     u64 hash = val;
- 
+
     /*  Sigh, gcc can't optimise this alone like it does for 32 bits. */
     u64 n = hash;
     n <<= 18;
@@ -19,9 +19,9 @@ u64 hash_64(u64 val, unsigned int bits)
     hash += n;
     n <<= 2;
     hash += n;
- 
+
     /* High bits are more random, so use them. */
-    return hash >> (64 - bits);
+    return hash;
 }
 
 void print(HASH *dir)
@@ -39,7 +39,7 @@ void print(HASH *dir)
         {
             Segment *dir_ = dir->_->_[i];
 
-            printf("(%08x, %08x)", dir_->_[j].key, hash_64(dir_->_[j].key, 64));
+            printf("(%08x, %08x)", dir_->_[j].key, hash_64(dir_->_[j].key));
         }
         printf("\n");
     }
@@ -47,7 +47,7 @@ void print(HASH *dir)
 
 int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 {
-    Key_t key_hash = hash_64(new_key, 64);
+    Key_t key_hash = hash_64(new_key);
 
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
@@ -59,7 +59,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         u64 slot = (y + i) % kNumSlot;
         //printf("slot = %x slot.key = %x\n",slot,dir_->_[slot].key);
         if (dir_->_[slot].key == INVALID ||
-            (hash_64(dir_->_[slot].key, 64) >> (key_size - dir_->local_depth)) != dir_->pattern)
+            (hash_64(dir_->_[slot].key) >> (key_size - dir_->local_depth)) != dir_->pattern)
         {
             dir_->_[slot].value = new_value;
             dir_->_[slot].key = new_key;
@@ -84,9 +84,9 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         {
             if (dir_->_[i].key != INVALID)
             {
-                Key_t re_hash_key = hash_64(dir_->_[i].key, 64);
+                Key_t re_hash_key = hash_64(dir_->_[i].key);
                 size_t pattern = re_hash_key >> (key_size - new_Segment->local_depth);
-		        //printf("rehash_key = %x pattern = %x\n",re_hash_key, pattern);
+                //printf("rehash_key = %x pattern = %x\n",re_hash_key, pattern);
                 if (pattern == new_Segment->pattern)
                 {
                     //printf("rehash_key = %x pattern = %x", re_hash_key, pattern);
@@ -110,11 +110,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         //printf("New Segment ok\n");
 
         //Directory翻倍
-        Directory *new_dir = (Directory *)malloc(sizeof(Directory));
-        Segment **temp_S = (Segment **)malloc(sizeof(Segment *) * (1 << (dir->global_depth + 1)));
-        if (temp_S == NULL)
-            printf("temp_S==NULL\n");
-        new_dir->_ = temp_S;
+        Directory *new_dir = getNode(HASH_DIRECTORY);
         for (i = 0; i < (1 << (dir->global_depth)); ++i)
         {
             if (i == x)
@@ -128,9 +124,6 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
                 new_dir->_[i * 2 + 1] = dir->_->_[i];
             }
         }
-	free(dir->_->_);
-	free(dir->_);
-	dir->_=NULL;
         dir->_ = new_dir;
         pmem_persist(dir->_, sizeof(Directory));
         mfence();
@@ -146,7 +139,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         pmem_persist(dir, sizeof(HASH));
         mfence();
         //printf("new_Segment %p\n", new_Segment);
-	/*	for (i = 0; i < (1 << dir->global_depth); ++i) {
+        /*	for (i = 0; i < (1 << dir->global_depth); ++i) {
 			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}*/
         //printf("insert again\n");
@@ -168,12 +161,12 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 		}*/
         new_Segment->local_depth = dir_->local_depth + 1;
         //printf("new_Segment=%p, local_depth=%d, pattern=%d\n", new_Segment,new_Segment->local_depth,new_Segment->pattern);
-        
+
         for (i = 0; i < kNumSlot; ++i)
         {
             if (dir_->_[i].key != INVALID)
             {
-                Key_t re_hash_key = hash_64(dir_->_[i].key, 64);
+                Key_t re_hash_key = hash_64(dir_->_[i].key);
                 size_t pattern = re_hash_key >> (key_size - new_Segment->local_depth);
                 if (pattern == new_Segment->pattern)
                 {
@@ -196,8 +189,8 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         pmem_persist(new_Segment, sizeof(new_Segment));
         mfence();
         // for (i = 0; i < (1 << dir->global_depth); ++i) {
-		// 	printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
-		// }
+        // 	printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
+        // }
 
         for (i = 0; i < (1 << (dir->global_depth - new_Segment->local_depth)); ++i)
         {
@@ -209,7 +202,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         ++dir_->local_depth;
         //dir_->pattern = dir_->pattern << 1;
         //printf("new_Segment %p\n", new_Segment);
-	/*	for (i = 0; i < (1 << dir->global_depth); ++i) {
+        /*	for (i = 0; i < (1 << dir->global_depth); ++i) {
 			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}*/
         //printf("insert_again\n");
@@ -222,7 +215,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
 int delete_hash(HASH *dir, Key_t search_key)
 {
-    Key_t key_hash = hash_64(search_key, 64);
+    Key_t key_hash = hash_64(search_key);
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
 
@@ -245,7 +238,7 @@ int delete_hash(HASH *dir, Key_t search_key)
 
 Value_t search_hash(HASH *dir, Key_t search_key)
 {
-    Key_t key_hash = hash_64(search_key, 64);
+    Key_t key_hash = hash_64(search_key);
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
 
@@ -285,9 +278,9 @@ Value_t search_hash(HASH *dir, Key_t search_key)
 void init(HASH *o_hash)
 {
     o_hash->global_depth = 1;
-    o_hash->_ = malloc(sizeof(Directory));
+    o_hash->_ = getnode(HASH_DIRECTORY);
     Directory *init_dir = o_hash->_;
-    init_dir->_ = malloc(sizeof(Segment *)*2);
+    
     init_dir->_[0] = getNode(HASH_SEGMENT);
     memset(init_dir->_[0], -1, sizeof(Segment));
     init_dir->_[0]->local_depth = 1;

@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         //     return 0;
         // }
         //print(&o_hash);
-        /*int j;
+        int j;
         for (j = 0; j < i; ++j)
         {
             if (search_hash(&o_hash, a[j]) != (j + 1))
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
                 return 0;
             }
             //printf("search %x ok\n", a[j]);
-        }*/
+        }
     }
     mfence();
     gettimeofday(&end,NULL);

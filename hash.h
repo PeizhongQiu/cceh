@@ -48,7 +48,7 @@ typedef struct Segment
 
 typedef struct Directory
 {
-    Segment **_;   
+    Segment *_[64*1024];   
 } Directory;
 
 typedef struct HASH

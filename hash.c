@@ -65,6 +65,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
             dir_->_[slot].key = new_key;
             pmem_persist(&dir_->_[slot], sizeof(Pair));
             mfence();
+            print(dir);
             return 1;
         }
     }

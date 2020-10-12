@@ -51,7 +51,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
-    printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
+    //printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
     Segment *dir_ = dir->_->_[x];
     unsigned i;
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)
@@ -65,7 +65,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
             dir_->_[slot].key = new_key;
             pmem_persist(&dir_->_[slot], sizeof(Pair));
             mfence();
-            print(dir);
+            //print(dir);
             return 1;
         }
     }
@@ -199,6 +199,9 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         }
 
         pmem_persist(dir->_, sizeof(Directory));
+        mfence();
+        dir_->pattern = dir_->pattern << 1;
+        pmem_persist(&dir_->pattern, sizeof(size_t));
         mfence();
         ++dir_->local_depth;
         //dir_->pattern = dir_->pattern << 1;

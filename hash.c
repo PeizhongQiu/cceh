@@ -57,7 +57,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)
     {
         u64 slot = (y + i) % kNumSlot;
-        printf("slot = %x slot.key = %016llx slot.hash_key = %016llx\n",slot,seg->_[slot].key, hash_64(seg->_[slot].key));
+        //printf("slot = %x slot.key = %016llx slot.hash_key = %016llx\n",slot,seg->_[slot].key, hash_64(seg->_[slot].key));
         if (seg->_[slot].key == INVALID ||
             (hash_64(seg->_[slot].key) >> (key_size - seg->local_depth)) != seg->pattern)
         {
@@ -65,7 +65,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
             seg->_[slot].key = new_key;
             pmem_persist(&seg->_[slot], sizeof(Pair));
             mfence();
-            print(dir);
+            //print(dir);
             return 1;
         }
     }

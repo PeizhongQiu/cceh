@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     mfence();
     for (i = 0; i < TEST_NUM; ++i)
     {
-        //printf("insert %x \n", a[i]);
+        //printf("%llx   insert %x \n",i , a[i]);
         int ok = insert_hash(&o_hash, a[i], i + 1);
         //printf("%d\n", o_hash.global_depth);
         // if (ok == -1)

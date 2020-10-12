@@ -51,7 +51,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
     Key_t x = (key_hash >> (key_size - dir->global_depth));
     u64 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
-    printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
+    //printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
     Segment *seg = dir->_->_[x];
     unsigned i;
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)
@@ -73,7 +73,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     if (seg->local_depth == dir->global_depth)
     {
         //分配一个新的Segment
-        printf("split 1 begin...\n");
+        //printf("split 1 begin...\n");
         Segment *new_Segment = getNode(HASH_SEGMENT, 0);
         memset(new_Segment, -1, sizeof(struct Segment));
 

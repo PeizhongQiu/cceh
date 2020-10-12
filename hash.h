@@ -48,7 +48,7 @@ typedef struct Segment
 
 typedef struct Directory
 {
-    Segment **_;
+    Segment **_;   
 } Directory;
 
 typedef struct HASH
@@ -62,28 +62,6 @@ Value_t search_hash(HASH *dir, Key_t search_key);
 int delete_hash(HASH *dir, Key_t search_key);
 int insert_hash(HASH *dir, Key_t new_key, Value_t new_value);
 void print(HASH *dir);
-
-inline size_t unaligned_load(const char *p)
-{
-    size_t result;
-    __builtin_memcpy(&result, p, sizeof(result));
-    return result;
-}
-
-inline size_t load_bytes(const char *p, int n)
-{
-    size_t result = 0;
-    --n;
-    do
-        result = (result << 8) + (unsigned char)(p[n]);
-    while (--n >= 0);
-    return result;
-}
-
-inline size_t shift_mix(size_t v)
-{
-    return v ^ (v >> 47);
-}
 
 #define INVALID -1
 #define NONE 0x0

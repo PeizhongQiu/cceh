@@ -1,6 +1,27 @@
 #include "hash.h"
 #include "memory_management.h"
 
+size_t unaligned_load(const char *p)
+{
+  size_t result;
+  __builtin_memcpy(&result, p, sizeof(result));
+  return result;
+}
+
+size_t load_bytes(const char *p, int n)
+{
+  size_t result = 0;
+  --n;
+  do
+    result = (result << 8) + (unsigned char)(p[n]);
+  while (--n >= 0);
+  return result;
+}
+
+size_t shift_mix(size_t v)
+{
+  return v ^ (v >> 47);
+}
 
 size_t _Hash_bytes(const void *ptr, size_t len, size_t seed)
 {

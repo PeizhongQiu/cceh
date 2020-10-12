@@ -32,6 +32,6 @@
 })
 
 void *getNvmBlock(int type);
-void *getNode(int type);
+void *getNode(int type, int size);
 void mfence(void);
 #endif

@@ -9,7 +9,7 @@ void *table[HASH_TYPE][10000];
 //MemoryBlock * mem_table[100000000/MEMORY_BLOCK_LEN +1];
 
 //每个nvmblock对应一个4M块
-NVMBLOCK_DECLARE(Directory);
+//NVMBLOCK_DECLARE(Directory);
 NVMBLOCK_DECLARE(Segment);
 
 //mm是每种类型的table，已经分配的数量
@@ -49,19 +49,20 @@ void *add_pmalloc(int type, size_t size, size_t *mapped_len)
 	return addr;
 }
 
-void *getNode(int type)
+void *getNode(int type, int size)
 {
 	switch (type)
 	{
 	case HASH_DIRECTORY:;
-		NVMBLOCK(Directory) *nvm_Block_Directory = table[type][mm[type]];
-		if (nvm_Block_Directory == NULL || nvm_Block_Directory->used_num == MEMORY_BLOCK_LEN(Directory))
+		size_t mapped_len;
+		Directory *dir = malloc(sizeof(Directory));
+		dir->_ = (Segment**)add_pmalloc(type, size*sizeof(Segment*), &mapped_len);
+		if (!dir->_)
 		{
-			nvm_Block_Directory = getNvmBlock(type);
-			nvm_Block_Directory->used_num = 0;
+			printf("newBlock creation fails: nvm\n");
+			exit(1);
 		}
-		//nvm_Block->used_num++;
-		return &nvm_Block_Directory->data[(nvm_Block_Directory->used_num++)%2];
+		return dir;
 	case HASH_SEGMENT:;
 		NVMBLOCK(Segment) *nvm_Block_Segment = table[type][mm[type]];
 		

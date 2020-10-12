@@ -40,16 +40,16 @@ int main(int argc, char *argv[])
         //     return 0;
         // }
         //print(&o_hash);
-        int j;
-        for (j = 0; j < i; ++j)
-        {
-            if (search_hash(&o_hash, a[j]) != (j + 1))
-            {
-                printf("search %x error search_result=%x\n", a[j], search_hash(&o_hash, a[j]));
-                return 0;
-            }
-            //printf("search %x ok\n", a[j]);
-        }
+        // int j;
+        // for (j = 0; j < i; ++j)
+        // {
+        //     if (search_hash(&o_hash, a[j]) != (j + 1))
+        //     {
+        //         printf("search %x error search_result=%x\n", a[j], search_hash(&o_hash, a[j]));
+        //         return 0;
+        //     }
+        //     //printf("search %x ok\n", a[j]);
+        // }
     }
     mfence();
     gettimeofday(&end,NULL);

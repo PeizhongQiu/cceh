@@ -1,27 +1,59 @@
 #include "hash.h"
 #include "memory_management.h"
 
-u64 hash_64(u64 val)
+inline size_t unaligned_load(const char *p)
 {
-    u64 hash = val;
+  size_t result;
+  __builtin_memcpy(&result, p, sizeof(result));
+  return result;
+}
 
-    /*  Sigh, gcc can't optimise this alone like it does for 32 bits. */
-    u64 n = hash;
-    n <<= 18;
-    hash -= n;
-    n <<= 33;
-    hash -= n;
-    n <<= 3;
-    hash += n;
-    n <<= 3;
-    hash -= n;
-    n <<= 4;
-    hash += n;
-    n <<= 2;
-    hash += n;
+inline size_t load_bytes(const char *p, int n)
+{
+  size_t result = 0;
+  --n;
+  do
+    result = (result << 8) + (unsigned char)(p[n]);
+  while (--n >= 0);
+  return result;
+}
 
-    /* High bits are more random, so use them. */
-    return hash;
+inline size_t shift_mix(size_t v)
+{
+  return v ^ (v >> 47);
+}
+
+size_t _Hash_bytes(const void *ptr, size_t len, size_t seed)
+{
+  static const size_t mul = (((size_t)0xc6a4a793UL) << 32UL) + (size_t)0x5bd1e995UL;
+  const char *const buf = (const char *)(ptr);
+
+  // Remove the bytes not divisible by the sizeof(size_t).  This
+  // allows the main loop to process the data as 64-bit integers.
+  const size_t len_aligned = len & ~(size_t)0x7;
+  const char *const end = buf + len_aligned;
+  size_t hash = seed ^ (len * mul);
+  const char *p = buf;
+  for (; p != end; p += 8)
+  {
+    const size_t data = shift_mix(unaligned_load(p) * mul) * mul;
+    hash ^= data;
+    hash *= mul;
+  }
+  if ((len & 0x7) != 0)
+  {
+    const size_t data = load_bytes(end, len & 0x7);
+    hash ^= data;
+    hash *= mul;
+  }
+  hash = shift_mix(hash) * mul;
+  hash = shift_mix(hash);
+  return hash;
+}
+
+size_t hash_64(size_t val)
+{
+    return _Hash_bytes(&val, sizeof(size_t), 0xc70f6907UL);
 }
 
 void print(HASH *dir)

@@ -29,13 +29,13 @@ typedef struct Pair
     Value_t value;
 } Pair;
 
-#define kSegmentBits 2
+#define kSegmentBits 8
 #define kMask ((1 << kSegmentBits) - 1)
 #define kShift kSegmentBits
-#define kSegmentSize ((1 << kSegmentBits) * 16 * 4)
+#define kSegmentSize ((1 << kSegmentBits) * 4 * 16)
 #define kNumPairPerCacheLine 4
 #define kNumCacheLine 1
-#define kNumSlot ((1 << kSegmentBits) * 4 * 16 / sizeof(Pair))
+#define kNumSlot ((1 << kSegmentBits) * 16 * 4 / sizeof(Pair))
 #define key_size (8 * sizeof(size_t))
 
 typedef struct Segment

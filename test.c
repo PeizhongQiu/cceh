@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < TEST_NUM; ++i)
     {
         #ifdef DEBUG_ERROR
-        printf("%llx   insert %x \n",i , a[i]);
+        printf("%llx   insert %x \n",i , range[i]);
         #endif
         
         int ok = insert_hash(&o_hash, range[i], i + 1);

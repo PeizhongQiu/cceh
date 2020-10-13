@@ -32,10 +32,10 @@ typedef struct Pair
 #define kSegmentBits 8
 #define kMask ((1 << kSegmentBits) - 1)
 #define kShift kSegmentBits
-#define kSegmentSize ((1 << kSegmentBits) * 16 * 16)
+#define kSegmentSize ((1 << kSegmentBits) * 4 * 16)
 #define kNumPairPerCacheLine 4
-#define kNumCacheLine 4
-#define kNumSlot ((1 << kSegmentBits) * 16 * 16 / sizeof(Pair))
+#define kNumCacheLine 1
+#define kNumSlot ((1 << kSegmentBits) * 4 * 16 / sizeof(Pair))
 #define key_size (8 * sizeof(size_t))
 
 typedef struct Segment

@@ -1,6 +1,6 @@
 all: dynamic_hash
 
-CFLAGS=CFLAG
+CFLAGS=${CFLAG}
 CFLAGS+=-g -c
 
 dynamic_hash: test.o memory_management.o hash.o 

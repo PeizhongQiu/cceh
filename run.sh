@@ -9,7 +9,7 @@ do
         do
             make clean;
             make CFLAG=-DDEBUG_TIME;
-            ./dynamic_hash ${array[i]} ${k} >> ${name[j]};
+            ./dynamic_hash ${array[i]} ${k} >> ${name[i]};
         done
     done
 done

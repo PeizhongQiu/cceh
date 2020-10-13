@@ -68,6 +68,9 @@ int main(int argc, char *argv[])
     mfence();
     time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
     printf("time_consumption of insert is %lld\n", time_consumption);
+    #ifdef DUBUG_TIME
+        print_resize();
+    #endif
 
     printf("insert all over\n");
     int j;

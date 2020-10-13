@@ -65,4 +65,8 @@ void print(HASH *dir);
 
 #define INVALID -1
 #define NONE 0x0
+
+#ifdef DUBUG_TIME
+    void print_resize();
+#endif
 #endif

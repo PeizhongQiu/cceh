@@ -2,10 +2,16 @@
 #include "memory_management.h"
 
 #ifdef DUBUG_TIME
-    u64 resize_number = 0;
-    u64 resize_1_time = 0;
-    u64 resize_2_time = 0;
+    u64 resize_time = 0;
+    u64 resize_1_num = 0;
+    u64 resize_2_num = 0;
     u64 malloc_time = 0;
+    void print_resize()
+    {
+        printf("resize_time = %lld\n", resize_time);
+        printf("resize_1_num = %lld\n", resize_1_num);
+        printf("resize_2_num = %lld\n", resize_2_num);
+    }
 #endif
 
 size_t unaligned_load(const char *p)

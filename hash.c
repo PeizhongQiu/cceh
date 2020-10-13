@@ -1,7 +1,7 @@
 #include "hash.h"
 #include "memory_management.h"
 
-#ifdef DUBUG_TIME
+#ifdef DEBUG_TIME
     u64 resize_time = 0;
     u64 resize_1_num = 0;
     u64 resize_2_num = 0;

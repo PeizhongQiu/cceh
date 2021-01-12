@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     }
 
     HASH o_hash; //origin hash
-    init(&o_hash);
+    init_hash(&o_hash);
     struct timeval start, end;
     long long time_consumption = 0;
     mfence();

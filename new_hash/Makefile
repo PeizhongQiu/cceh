@@ -6,7 +6,7 @@ CFLAGS+=-g -c
 dynamic_hash: test.o memory_management.o new_hash.o 
 	gcc -g  -o dynamic_hash test.o memory_management.o new_hash.o -lm -lpthread -lpmem
 
-test.o : test.c hash.h
+test.o : test.c new_hash.h
 	gcc ${CFLAGS} test.c 
 
 memory_management.o: memory_management.c 

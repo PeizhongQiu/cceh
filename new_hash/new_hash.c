@@ -199,7 +199,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     Key_t dir_index = key_hash >> (key_size - dir->global_depth);
     u64 start_index = (key_hash & kMask) * kNumPair;
     #ifdef DEBUG_ERROR
-        printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
+        printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,dir_index,start_index,dir->global_depth);
     #endif
     Segment *seg = dir->_->_[dir_index];
     u64 num = seg->_[start_index].value;

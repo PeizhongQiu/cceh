@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-typedef unsigned long long u64
+typedef unsigned long long u64;
 
 void *add_pmalloc(size_t size, size_t *mapped_len)
 {
@@ -28,7 +28,7 @@ struct test{
 int main()
 {
     size_t mapped_len;
-    struct test *a = add_pmalloc(sizeof(test),&mapped_len);
+    struct test *a = add_pmalloc(sizeof(struct test),&mapped_len);
     struct timeval start, end;
     u64 c;
 

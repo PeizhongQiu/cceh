@@ -1,6 +1,6 @@
 #include "memory_management.h"
 #include <libpmem.h>
-#include "hash.h"
+#include "new_hash.h"
 
 //注意第二维度从1开始
 //存放每个块的地址

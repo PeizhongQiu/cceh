@@ -170,7 +170,7 @@ int main()
         mfence();
         gettimeofday(&start, NULL);
         mfence();
-        for(l = 0; l < 10000; l++)  
+        for(l = 0; l < 1000; l++)  
             for(i = 0; i < 1024; i++){
                 c = a->_[i*16 + 0];
                 c = a->_[i*16 + 2];

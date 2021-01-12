@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-#define unsigned long long u64
+typedef unsigned long long u64
 
 void *add_pmalloc(size_t size, size_t *mapped_len)
 {

@@ -385,14 +385,15 @@ int delete_hash(HASH *dir, Key_t search_key)
     if(num == 0) return NONE;
     u64 list = seg->_[start_index].key;
     
-    s64 left = 0, right = num - 1;
+    s64 left = 0, right = num - 1, mid = 0;
+    u64 cmp_index = 0, slot = 0, slot_key = 0, slot_hash = 0;
 
     while(left <= right) {
-        s64 mid = (right + left) / 2;
-        u64 cmp_index = (list >> (60 - mid * 4)) & 15;
-        u64 slot = start_index + cmp_index;
-        u64 slot_key = seg->_[slot].key;
-        u64 slot_hash = hash_64(slot_key);
+        mid = (right + left) / 2;
+        cmp_index = (list >> (60 - mid * 4)) & 15;
+        slot = start_index + cmp_index;
+        slot_key = seg->_[slot].key;
+        slot_hash = hash_64(slot_key);
 
         if (slot_hash == key_hash && slot_key == search_key) {
             seg->_[start_index].key = ((list << 4) & (0xFFFFFFFFFFFFFFFF >> (mid * 4))) 
@@ -421,12 +422,13 @@ Value_t search_hash(HASH *dir, Key_t search_key)
     if(num == 0) return NONE;
     u64 list = seg->_[start_index].key;
 
-    s64 left = 0, right = num - 1;
+    s64 left = 0, right = num - 1, mid = 0;
+    u64 slot = 0, slot_key = 0, slot_hash = 0;
     while(left <= right) {
-        s64 mid = (right + left) / 2;
-        u64 slot = start_index + ((list >> (60 - mid * 4)) & 15);
-        u64 slot_key = seg->_[slot].key;
-        u64 slot_hash = hash_64(slot_key);
+        mid = (right + left) / 2;
+        slot = start_index + ((list >> (60 - mid * 4)) & 15);
+        slot_key = seg->_[slot].key;
+        slot_hash = hash_64(slot_key);
         if (slot_hash == key_hash && slot_key == search_key) {
             return seg->_[slot].value;
         } else if (slot_hash < key_hash || (slot_hash == key_hash && slot_key < search_key)) {

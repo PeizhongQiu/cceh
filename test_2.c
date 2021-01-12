@@ -5,6 +5,17 @@
 
 typedef unsigned long long u64;
 
+#define asm_mfence()                \
+({                      \
+    __asm__ __volatile__ ("mfence":::"memory");    \
+})
+
+void mfence()
+{
+    asm volatile("mfence" ::
+                     : "memory");
+}
+
 void *add_pmalloc(size_t size, size_t *mapped_len)
 {
 	char path[100] = "test_2";

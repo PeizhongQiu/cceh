@@ -166,11 +166,11 @@ Segment * Segment_Split(Segment *seg)
         #endif
 
         //将元素移动
-        u64 j;
+        s64 j;
         u64 new_Segment_index = 15;
         u64 new_Segment_num = 0;
         u64 new_list = INIT_LIST;
-        for(j = num - 1; j >= sort_index; j++){
+        for(j = num - 1; j >= sort_index; j--){
             u64 new_Segment_slot = new_Segment_index + start_index;
             cmp_index = (list >> (60 - j * 4)) & 15;
             slot = start_index + cmp_index;
@@ -182,7 +182,7 @@ Segment * Segment_Split(Segment *seg)
             --new_Segment_index;
             ++new_Segment_num;
             #ifdef DEBUG_ERROR
-                printf("i = %d, j = %d, new_list = %d\n", i, j, new_list);
+                printf("i = %d, j = %d, new_list = %016llx, sort_index = %d\n", i, j, new_list, sort_index);
             #endif
         }
 
@@ -200,7 +200,7 @@ Segment * Segment_Split(Segment *seg)
         pmem_persist(&seg->_[start_index], sizeof(Pair));
         mfence();
         #ifdef DEBUG_ERROR
-            printf("i = %d, list = %x, num = %d\n", i, seg->_[start_index].key, seg->_[start_index].value);
+            printf("i = %d, list = %016llx, num = %d\n", i, seg->_[start_index].key, seg->_[start_index].value);
         #endif
     }
     return new_Segment;

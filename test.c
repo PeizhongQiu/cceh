@@ -1,5 +1,18 @@
 #include "hash.h"
 #include <time.h>
+
+void clear_cache() {
+    int* dummy = malloc(1024*1024*256*sizeof(int));
+    for (int i=0; i<1024*1024*256; i++) {
+	    dummy[i] = i;
+    }
+
+    for (int i=100;i<1024*1024*256;i++) {
+	    dummy[i] = dummy[i-rand()%100] + dummy[i+rand()%100];
+    }
+    free(dummy);
+}
+
 int main(int argc, char *argv[])
 {
     long long TEST_NUM = atoi(argv[1]);
@@ -38,10 +51,11 @@ int main(int argc, char *argv[])
 
     HASH o_hash; //origin hash
     init(&o_hash);
-    struct timeval start, end;
+    struct timespec start, end;
     long long time_consumption = 0;
+    clear_cache();
     mfence();
-    gettimeofday(&start, NULL);
+    clock_gettime(CLOCK_MONOTONIC, &start);
     mfence();
     for (i = 0; i < TEST_NUM; ++i)
     {
@@ -64,9 +78,9 @@ int main(int argc, char *argv[])
         #endif
     }
     mfence();
-    gettimeofday(&end, NULL);
+    clock_gettime(CLOCK_MONOTONIC, &end);
     mfence();
-    time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+    time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
     printf("time_consumption of insert is %lld\n", time_consumption);
     #ifdef DEBUG_TIME
         print_resize();
@@ -74,17 +88,18 @@ int main(int argc, char *argv[])
 
     printf("insert all over\n");
     int j;
+    clear_cache();
     mfence();
-    gettimeofday(&start, NULL);
+    clock_gettime(CLOCK_MONOTONIC, &start);
     mfence();
     for (j = 0; j < TEST_NUM; ++j)
     {
         search_hash(&o_hash, search_array[j]);
     }
     mfence();
-    gettimeofday(&end, NULL);
+    clock_gettime(CLOCK_MONOTONIC, &end);
     mfence();
-    time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+    time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
     printf("time_consumption of search is %lld\n", time_consumption);
     return 0;
 }

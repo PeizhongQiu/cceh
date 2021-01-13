@@ -107,6 +107,7 @@ Segment * Segment_Split(Segment *seg)
         u64 start_index = i * kNumPair;
         u64 list = seg->_[start_index].key;
         u64 num = list >> 60;
+        u64 old_list = list;
         if(num == 0){
             //该组bucket为空
             #ifdef DEBUG_ERROR
@@ -115,87 +116,35 @@ Segment * Segment_Split(Segment *seg)
             continue;
         }
 
-        //找到分裂的位置,即sort_index
-        s64 left = 1, right = num, mid = 0;
-        s64 cmp_index = 0, sort_index = 1;
-        u64 slot_key = 0, slot_hash = 0, slot = 0;
-        while(left < right) {
-            mid = (right + left) / 2;
-            cmp_index = (list >> (60 - mid * 4)) & 15;
-            slot = start_index + cmp_index;
-            slot_key = seg->_[slot].key;
-            slot_hash = hash_64(slot_key);
-            if (slot_hash == cmp_pattern) {
-                s64 k = mid - 1;
-                while(k>=1){
-                    cmp_index = (list >> (60 - k * 4)) & 15;
-                    slot = start_index + cmp_index;
-                    slot_key = seg->_[slot].key;
-                    slot_hash = hash_64(slot_key);
-                    --k;
-                    if(slot_hash != cmp_pattern)
-                        break;
-                }
-                sort_index = k + 1;
-                break;
-            } else if (slot_hash < cmp_pattern) {
-                left = mid + 1;
-            } else if (slot_hash > cmp_pattern) {
-                right = mid;
-            }
-        }
-        if(left > right){
-            //即当num == 0时的情况
-            continue;
-        }
-        else if(left == right){
-            cmp_index = (list >> (60 - left * 4)) & 15;
-            slot = start_index + cmp_index;
-            slot_key = seg->_[slot].key;
-            slot_hash = hash_64(slot_key);
-            if (slot_hash < cmp_pattern) {
-                continue;
-            } else if (slot_hash >= cmp_pattern) {
-                //left为插入的位置
-                sort_index = left;
-            }
-        }
-
-        #ifdef DEBUG_ERROR
-            printf("i = %d, sort_index = %d\n", i, sort_index);
-        #endif
-
         //将元素移动
-        s64 j;
-        u64 new_Segment_index = 15;
-        u64 new_Segment_num = 0;
-        u64 new_list = INIT_LIST;
-        for(j = num; j >= sort_index; j--){
-            u64 new_Segment_slot = new_Segment_index + start_index;
+        s64 j = num;
+        u64 new_Segment_index = 15, new_Segment_num = 0, new_list = INIT_LIST;
+        u64 new_Segment_slot = 0, cmp_index = 0, slot = 0;
+        while(j >= 1){
+            new_Segment_slot = new_Segment_index + start_index;
             cmp_index = (list >> (60 - j * 4)) & 15;
             slot = start_index + cmp_index;
-            new_Segment->_[new_Segment_slot].value = seg->_[slot].value;
-            new_Segment->_[new_Segment_slot].key = seg->_[slot].key;
-            pmem_persist(&seg->_[new_Segment_slot], sizeof(Pair));
-            mfence();
-            new_list = (new_list >> 4) + (new_Segment_index << 56);
-            --new_Segment_index;
-            ++new_Segment_num;
-            #ifdef DEBUG_ERROR
-                printf("i = %d, j = %d, new_list = %016llx, sort_index = %d\n", i, j, new_list, sort_index);
-            #endif
+            if(hash_64(seg->_[slot].key) > cmp_pattern){
+                new_Segment->_[new_Segment_slot].value = seg->_[slot].value;
+                new_Segment->_[new_Segment_slot].key = seg->_[slot].key;
+                pmem_persist(&seg->_[new_Segment_slot], sizeof(Pair));
+                mfence();
+                new_list = (new_list >> 4) + (new_Segment_index << 56);
+                ++new_Segment_num;
+                --new_Segment_index;
+                list = (list << 4 >> 4) + ((num - new_Segment_num) << 60);
+                list = ((list << 4) & (0xFFFFFFFFFFFFFFFF >> (j * 4))) 
+                            + cmp_index 
+                            + (list & (0xFFFFFFFFFFFFFFFF << (60 - j * 4) << 4));
+            }
+            j--;
         }
 
         new_Segment->_[start_index].key = (new_list << 4 >> 4) + (new_Segment_num << 60);
         pmem_persist(&new_Segment->_[start_index].key, sizeof(u64));
         mfence();
 
-        //根据sort_index更新0key
-        list = (list << 4 >> 4) + ((num - new_Segment_num) << 60);
-        seg->_[start_index].key = 
-            ((list << (num * 4 + 4 - sort_index * 4)) & (0xFFFFFFFFFFFFFFFF >> (sort_index * 4))) 
-            + ((list >> (60 - num * 4)) & (0xFFFFFFFFFFFFFFFF << (60 - num * 4 + sort_index * 4) >> (60 - num * 4 + sort_index * 4)))
-            + (list & (0xFFFFFFFFFFFFFFFF << (60 - sort_index * 4) << 4));
+        seg->_[start_index].key = list;
         pmem_persist(&seg->_[start_index].key, sizeof(u64));
         mfence();
         #ifdef DEBUG_ERROR
@@ -240,12 +189,11 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
             cmp_index = (list >> (60 - mid * 4)) & 15;
             slot = start_index + cmp_index;
             slot_key = seg->_[slot].key;
-            slot_hash = hash_64(slot_key);
-            if (slot_hash == key_hash && slot_key == new_key) {
+            if (slot_key == new_key) {
                 return -1;
-            } else if (slot_hash < key_hash || (slot_hash == key_hash && slot_key < new_key)) {
+            } else if (slot_key < new_key) {
                 left = mid + 1;
-            } else if (slot_hash > key_hash || (slot_hash == key_hash && slot_key > new_key)) {
+            } else if (slot_key > new_key) {
                 right = mid;
             }
         }
@@ -257,12 +205,11 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
             cmp_index = (list >> (60 - left * 4)) & 15;
             slot = start_index + cmp_index;
             slot_key = seg->_[slot].key;
-            slot_hash = hash_64(slot_key);
-            if (slot_hash == key_hash && slot_key == new_key) {
+            if (slot_key == new_key) {
                 return -1;
-            } else if (slot_hash < key_hash || (slot_hash == key_hash && slot_key < new_key)) {
+            } else if (slot_key < new_key) {
                 sort_index = left + 1;
-            } else if (slot_hash > key_hash || (slot_hash == key_hash && slot_key > new_key)) {
+            } else if (slot_key > new_key) {
                 //left为插入的位置
                 sort_index = left;
             }
@@ -393,9 +340,8 @@ int delete_hash(HASH *dir, Key_t search_key)
         cmp_index = (list >> (60 - mid * 4)) & 15;
         slot = start_index + cmp_index;
         slot_key = seg->_[slot].key;
-        slot_hash = hash_64(slot_key);
 
-        if (slot_hash == key_hash && slot_key == search_key) {
+        if (slot_key == search_key) {
             list = (list << 4 >> 4) + ((num - 1) << 60);
             seg->_[start_index].key = 
                             ((list << 4) & (0xFFFFFFFFFFFFFFFF >> (mid * 4))) 
@@ -404,9 +350,9 @@ int delete_hash(HASH *dir, Key_t search_key)
             pmem_persist(&seg->_[start_index].key, sizeof(u64));
             mfence();
             return 1;
-        } else if (slot_hash < key_hash || (slot_hash == key_hash && slot_key < search_key)) {
+        } else if (slot_key < search_key) {
             left = mid + 1;
-        } else if (slot_hash > key_hash || (slot_hash == key_hash && slot_key > search_key)) {
+        } else if (slot_key > search_key) {
             right = mid - 1;
         }
     }
@@ -430,12 +376,11 @@ Value_t search_hash(HASH *dir, Key_t search_key)
         mid = (right + left) / 2;
         slot = start_index + ((list >> (60 - mid * 4)) & 15);
         slot_key = seg->_[slot].key;
-        slot_hash = hash_64(slot_key);
-        if (slot_hash == key_hash && slot_key == search_key) {
+        if (slot_key == search_key) {
             return seg->_[slot].value;
-        } else if (slot_hash < key_hash || (slot_hash == key_hash && slot_key < search_key)) {
+        } else if (slot_key < search_key) {
             left = mid + 1;
-        } else if (slot_hash > key_hash || (slot_hash == key_hash && slot_key > search_key)) {
+        } else if (slot_key > search_key) {
             right = mid - 1;
         }
     }

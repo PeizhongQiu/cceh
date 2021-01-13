@@ -5,7 +5,7 @@ for((k=1;k<=10;++k))
 do
     for((j=0;j<10;++j))
     do
-        for((i=0;i<5;++i))
+        for((i=4;i<5;++i))
         do
             make clean;
             make CFLAG=-DDEBUG_TIME;

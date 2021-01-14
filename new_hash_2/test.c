@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     init_hash(&o_hash);
     struct timespec start, end;
     long long time_consumption = 0;
-    clear_cache();
+    //clear_cache();
     mfence();
     clock_gettime(CLOCK_MONOTONIC, &start);
     mfence();
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
         
         #ifdef DEBUG_ERROR
         int j;
-        for (j = 0; j < i; ++j)
+        for (j = 0; j <= i; ++j)
         {
             if (search_hash(&o_hash, range[j]) != (j + 1))
             {

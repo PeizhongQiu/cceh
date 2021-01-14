@@ -363,7 +363,7 @@ Value_t search_hash(HASH *dir, Key_t search_key)
 {
     Key_t key_hash = hash_64(search_key);
     Key_t dir_index = key_hash >> (key_size - dir->global_depth);
-    u64 start_index = (key_hash & kMask) * kNumPair;
+    u64 start_index = (key_hash & kMask) << 4;
 
     Segment *seg = dir->_->_[dir_index];
     u64 list = seg->_[start_index].key;
@@ -373,18 +373,18 @@ Value_t search_hash(HASH *dir, Key_t search_key)
     s64 left = 1, right = num, mid = 0;
     u64 slot = 0, slot_key = 0, slot_hash = 0;
     while(left <= right) {
-        mid = (right + left) / 2;
-        slot = start_index + ((list >> (60 - mid * 4)) & 15);
-        slot_key = seg->_[slot].key;
-        if (slot_key == search_key) {
-            return seg->_[slot].value;
-        } else if (slot_key < search_key) {
+        mid = (right + left) >> 1;
+        slot_key = seg->_[start_index + ((list >> (60 - mid << 2)) & 15)].key;
+        if (slot_key < search_key) {
             left = mid + 1;
         } else if (slot_key > search_key) {
             right = mid - 1;
         }
+        else {
+            //slot_key == search_key
+            return seg->_[slot].value;
+        }
     }
-
     return NONE;
 }
 

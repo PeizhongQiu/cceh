@@ -107,7 +107,6 @@ Segment * Segment_Split(Segment *seg)
         u64 start_index = i * kNumPair;
         u64 list = seg->_[start_index].key;
         u64 num = list >> 60;
-        u64 old_list = list;
         if(num == 0){
             //该组bucket为空
             #ifdef DEBUG_ERROR
@@ -122,7 +121,7 @@ Segment * Segment_Split(Segment *seg)
         u64 new_Segment_slot = 0, cmp_index = 0, slot = 0;
         while(j >= 1){
             new_Segment_slot = new_Segment_index + start_index;
-            cmp_index = (list >> (60 - j * 4)) & 15;
+            cmp_index = (list >> (60 - (j << 2))) & 15;
             slot = start_index + cmp_index;
             if(hash_64(seg->_[slot].key) > cmp_pattern){
                 new_Segment->_[new_Segment_slot].value = seg->_[slot].value;
@@ -132,10 +131,9 @@ Segment * Segment_Split(Segment *seg)
                 new_list = (new_list >> 4) + (new_Segment_index << 56);
                 ++new_Segment_num;
                 --new_Segment_index;
-                list = (list << 4 >> 4) + ((num - new_Segment_num) << 60);
-                list = ((list << 4) & (0xFFFFFFFFFFFFFFFF >> (j * 4))) 
+                list = ((list << 4) & (0xFFFFFFFFFFFFFFFF >> (j << 2))) 
                             + cmp_index 
-                            + (list & (0xFFFFFFFFFFFFFFFF << (60 - j * 4) << 4));
+                            + (list & (0xFFFFFFFFFFFFFFFF << (60 - (j << 2)) << 4));
             }
             j--;
         }
@@ -144,6 +142,7 @@ Segment * Segment_Split(Segment *seg)
         pmem_persist(&new_Segment->_[start_index].key, sizeof(u64));
         mfence();
 
+        list = (list << 4 >> 4) + ((num - new_Segment_num) << 60);
         seg->_[start_index].key = list;
         pmem_persist(&seg->_[start_index].key, sizeof(u64));
         mfence();
@@ -181,8 +180,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         mfence();
         
         //更新list和num
-        s64 left = 1, right = num, mid = 0;
-        s64 sort_index = 1;
+        s64 left = 1, right = num, mid = 0, sort_index = 1;
         u64 slot_key = 0, slot_hash = 0;
         while(left < right) {
             mid = (right + left) >> 1;
@@ -198,7 +196,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
             }  
         }
         if(left == right){
-            slot = start_index + ((list >> (60 - left * 4)) & 15);
+            slot = start_index + ((list >> (60 - (left << 2))) & 15);
             slot_key = seg->_[slot].key;
             if (slot_key > new_key) {
                 //left为插入的位置
@@ -211,16 +209,17 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
                 return -1;
             }  
         }
-        else if(left > right){
+        else {
             //即当num == 0时的情况
+            //left > right
             sort_index = 1;
         }
          
         //根据sort_index和insert_index更新0key
         list = (list << 4 >> 4) + ((num + 1) << 60);
-        seg->_[start_index].key = ((list >> 4) & (0xFFFFFFFFFFFFFFFF >> (sort_index * 4) >> 4)) 
-                        + (insert_index << (60 - sort_index * 4))
-                        + (list & (0xFFFFFFFFFFFFFFFF << (60 - sort_index * 4) << 4));
+        seg->_[start_index].key = ((list >> 4) & (0xFFFFFFFFFFFFFFFF >> (sort_index << 2) >> 4)) 
+                        + (insert_index << (60 - (sort_index << 2)))
+                        + (list & (0xFFFFFFFFFFFFFFFF << (60 - (sort_index << 2)) << 4));
         pmem_persist(&seg->_[start_index].key, sizeof(u64));
         mfence();
         return 1;
@@ -246,13 +245,13 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         {
             if (i == dir_index)
             {
-                new_dir->_[i * 2] = dir->_->_[i];
-                new_dir->_[i * 2 + 1] = new_Segment;
+                new_dir->_[i << 1] = dir->_->_[i];
+                new_dir->_[(i << 1) + 1] = new_Segment;
             }
             else
             {
-                new_dir->_[i * 2] = dir->_->_[i];
-                new_dir->_[i * 2 + 1] = dir->_->_[i];
+                new_dir->_[i << 1] = dir->_->_[i];
+                new_dir->_[(i << 1) + 1] = dir->_->_[i];
             }
         }
         dir->_ = new_dir;

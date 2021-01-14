@@ -53,7 +53,9 @@ int main(int argc, char *argv[])
     init_hash(&o_hash);
     struct timespec start, end;
     long long time_consumption = 0;
-    clear_cache();
+    #ifdef DEBUG_TIME
+        clear_cache();
+    #endif
     mfence();
     clock_gettime(CLOCK_MONOTONIC, &start);
     mfence();
@@ -88,7 +90,9 @@ int main(int argc, char *argv[])
 
     printf("insert all over\n");
     int j;
-    clear_cache();
+    #ifdef DEBUG_TIME
+        clear_cache();
+    #endif
     mfence();
     clock_gettime(CLOCK_MONOTONIC, &start);
     mfence();

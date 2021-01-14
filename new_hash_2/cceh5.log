@@ -1,900 +1,900 @@
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 12760170
-resize_time = 3161484
+time_consumption of insert is 11855369729
+resize_time = 3455627
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5448175
+time_consumption of search is 4297050753
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 12772201
-resize_time = 3166360
+time_consumption of insert is 11736135961
+resize_time = 3449284
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5466445
+time_consumption of search is 4243405741
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 12727248
-resize_time = 3149599
+time_consumption of insert is 11739512511
+resize_time = 3427099
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5477734
+time_consumption of search is 4326526801
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 12674440
-resize_time = 3153377
+time_consumption of insert is 11691417642
+resize_time = 3440041
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5843347
+time_consumption of search is 4213420689
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 12607921
-resize_time = 3166372
+time_consumption of insert is 11591988537
+resize_time = 3424972
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5361405
+time_consumption of search is 4229600150
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 17252569
-resize_time = 4391759
+time_consumption of insert is 16519552798
+resize_time = 4783004
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 6004934
+time_consumption of search is 5489644853
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 17630678
-resize_time = 4458522
+time_consumption of insert is 14516404470
+resize_time = 4309675
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 6658516
+time_consumption of search is 4677607125
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 16788890
-resize_time = 4395100
+time_consumption of insert is 13521779056
+resize_time = 3907550
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5989139
+time_consumption of search is 4624096604
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 13121045
-resize_time = 3293194
+time_consumption of insert is 11792055460
+resize_time = 3474116
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5414604
+time_consumption of search is 4249959160
 This test insert number is :10000000
 This test radio is:1
 insert begin 
-time_consumption of insert is 12617856
-resize_time = 3163378
+time_consumption of insert is 11664074403
+resize_time = 3427101
 resize_1_num = 13
 resize_2_num = 8269
 insert all over
-time_consumption of search is 5395234
+time_consumption of search is 4238834489
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 19173556
-resize_time = 4947907
+time_consumption of insert is 11697154696
+resize_time = 3420138
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 7225932
+time_consumption of search is 4268977847
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 14731172
-resize_time = 3601743
+time_consumption of insert is 11678643522
+resize_time = 3427927
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5876184
+time_consumption of search is 4451957690
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 17933973
-resize_time = 4416312
+time_consumption of insert is 11578430719
+resize_time = 3439996
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 6298697
+time_consumption of search is 4270899202
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 12657756
-resize_time = 3144157
+time_consumption of insert is 11743594646
+resize_time = 3420836
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5446002
+time_consumption of search is 4280477171
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 13015903
-resize_time = 3155202
+time_consumption of insert is 11554260419
+resize_time = 3412842
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5422136
+time_consumption of search is 4463696680
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 13392720
-resize_time = 3128505
+time_consumption of insert is 11855635693
+resize_time = 3420241
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5435984
+time_consumption of search is 4287950680
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 17298895
-resize_time = 4255848
+time_consumption of insert is 11550780876
+resize_time = 3409714
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 6062029
+time_consumption of search is 4218198068
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 13736156
-resize_time = 3378379
+time_consumption of insert is 17092454657
+resize_time = 5066654
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5550695
+time_consumption of search is 5140882208
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 19829682
-resize_time = 5029191
+time_consumption of insert is 14191532582
+resize_time = 4264902
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 6865761
+time_consumption of search is 4435775037
 This test insert number is :10000000
 This test radio is:2
 insert begin 
-time_consumption of insert is 17413630
-resize_time = 4356976
+time_consumption of insert is 12752228700
+resize_time = 3747871
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5647416
+time_consumption of search is 4180518163
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 12984928
-resize_time = 3152249
+time_consumption of insert is 11502050612
+resize_time = 3402506
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5359306
+time_consumption of search is 4450099117
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 18681101
-resize_time = 4488684
+time_consumption of insert is 11575356490
+resize_time = 3434213
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5883554
+time_consumption of search is 4245703687
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 18747707
-resize_time = 4614891
+time_consumption of insert is 11564820729
+resize_time = 3419211
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 6508898
+time_consumption of search is 4299303423
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 12780547
-resize_time = 3182052
+time_consumption of insert is 11585205757
+resize_time = 3430636
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5639058
+time_consumption of search is 4550627298
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 13517374
-resize_time = 3239197
+time_consumption of insert is 11699627325
+resize_time = 3443997
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5536756
+time_consumption of search is 4193948723
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 12696627
-resize_time = 3143835
+time_consumption of insert is 11587705941
+resize_time = 3433478
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5568667
+time_consumption of search is 4528794492
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 12642199
-resize_time = 3138472
+time_consumption of insert is 11725790600
+resize_time = 3433944
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5458084
+time_consumption of search is 4280432403
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 12639618
-resize_time = 3150506
+time_consumption of insert is 11830961338
+resize_time = 3455561
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5317315
+time_consumption of search is 4324422559
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 13005845
-resize_time = 3271918
+time_consumption of insert is 17422041540
+resize_time = 5139961
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 5411817
+time_consumption of search is 5321145558
 This test insert number is :10000000
 This test radio is:3
 insert begin 
-time_consumption of insert is 18426973
-resize_time = 4393861
+time_consumption of insert is 11698113099
+resize_time = 3490971
 resize_1_num = 13
 resize_2_num = 8263
 insert all over
-time_consumption of search is 6428611
+time_consumption of search is 4360926977
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 18147459
-resize_time = 4369217
+time_consumption of insert is 11658405683
+resize_time = 3437472
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5850118
+time_consumption of search is 4379426232
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 13151201
-resize_time = 3125813
+time_consumption of insert is 11579764239
+resize_time = 3418546
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5469331
+time_consumption of search is 4349138486
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 12652480
-resize_time = 3124989
+time_consumption of insert is 11815266205
+resize_time = 3445459
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5434604
+time_consumption of search is 4350867521
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 15275122
-resize_time = 3844788
+time_consumption of insert is 11611368378
+resize_time = 3412558
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5624362
+time_consumption of search is 4374635965
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 12903771
-resize_time = 3151132
+time_consumption of insert is 11646285858
+resize_time = 3433426
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5375971
+time_consumption of search is 4342820492
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 12745033
-resize_time = 3148192
+time_consumption of insert is 17910132733
+resize_time = 5288021
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5418314
+time_consumption of search is 5005674645
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 13478625
-resize_time = 3184059
+time_consumption of insert is 17987056927
+resize_time = 5133575
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5387467
+time_consumption of search is 5406559048
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 12749541
-resize_time = 3131922
+time_consumption of insert is 14022533035
+resize_time = 4067834
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5541888
+time_consumption of search is 4366469880
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 12634027
-resize_time = 3139293
+time_consumption of insert is 11599739972
+resize_time = 3417731
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5387598
+time_consumption of search is 4378216856
 This test insert number is :10000000
 This test radio is:4
 insert begin 
-time_consumption of insert is 13113452
-resize_time = 3159829
+time_consumption of insert is 10524260768
+resize_time = 3124851
 resize_1_num = 13
 resize_2_num = 8277
 insert all over
-time_consumption of search is 5359073
+time_consumption of search is 4236587706
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12650010
-resize_time = 3116208
+time_consumption of insert is 11651006523
+resize_time = 3408812
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5563468
+time_consumption of search is 4349922880
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12986723
-resize_time = 3254475
+time_consumption of insert is 11610526577
+resize_time = 3423034
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5380904
+time_consumption of search is 4361421531
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12891915
-resize_time = 3136849
+time_consumption of insert is 11518111537
+resize_time = 3400616
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5513145
+time_consumption of search is 4267394253
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12649049
-resize_time = 3133797
+time_consumption of insert is 11580064726
+resize_time = 3411058
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5401227
+time_consumption of search is 4339226961
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12744796
-resize_time = 3125790
+time_consumption of insert is 15965764096
+resize_time = 4636050
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5536252
+time_consumption of search is 4831465059
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12741109
-resize_time = 3146892
+time_consumption of insert is 13216203278
+resize_time = 3893220
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5577004
+time_consumption of search is 4312354465
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12598486
-resize_time = 3130403
+time_consumption of insert is 11607303238
+resize_time = 3434779
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5393786
+time_consumption of search is 4569344538
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 13149074
-resize_time = 3202802
+time_consumption of insert is 11932521448
+resize_time = 3416664
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5451613
+time_consumption of search is 4282814970
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 12787211
-resize_time = 3149591
+time_consumption of insert is 11581088265
+resize_time = 3413515
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 5329375
+time_consumption of search is 4346180256
 This test insert number is :10000000
 This test radio is:5
 insert begin 
-time_consumption of insert is 18239172
-resize_time = 4261486
+time_consumption of insert is 18090960753
+resize_time = 5318628
 resize_1_num = 13
 resize_2_num = 8254
 insert all over
-time_consumption of search is 6141056
+time_consumption of search is 5660273203
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 17637910
-resize_time = 4107741
+time_consumption of insert is 12705188775
+resize_time = 3725022
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 6192772
+time_consumption of search is 4414498853
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 13199516
-resize_time = 3205208
+time_consumption of insert is 11639133819
+resize_time = 3440684
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5359420
+time_consumption of search is 4373262645
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 12708613
-resize_time = 3134157
+time_consumption of insert is 11547966980
+resize_time = 3409208
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5409007
+time_consumption of search is 4283722785
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 12690646
-resize_time = 3154363
+time_consumption of insert is 11613233627
+resize_time = 3418113
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5344800
+time_consumption of search is 4604973815
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 13111522
-resize_time = 3212248
+time_consumption of insert is 13232800040
+resize_time = 3786702
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5618748
+time_consumption of search is 4427104556
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 18337749
-resize_time = 4712209
+time_consumption of insert is 11578917330
+resize_time = 3424650
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 6072677
+time_consumption of search is 4289304601
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 14940986
-resize_time = 3753359
+time_consumption of insert is 11626398991
+resize_time = 3419486
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5349446
+time_consumption of search is 4480146441
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 13516877
-resize_time = 3413809
+time_consumption of insert is 11681446167
+resize_time = 3433664
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5475240
+time_consumption of search is 4306796468
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 12755377
-resize_time = 3165618
+time_consumption of insert is 11557447056
+resize_time = 3418836
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5443944
+time_consumption of search is 4585262587
 This test insert number is :10000000
 This test radio is:6
 insert begin 
-time_consumption of insert is 12748310
-resize_time = 3134850
+time_consumption of insert is 11986241064
+resize_time = 3452782
 resize_1_num = 13
 resize_2_num = 8248
 insert all over
-time_consumption of search is 5747603
+time_consumption of search is 4405231752
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 13963466
-resize_time = 3466872
+time_consumption of insert is 11567872320
+resize_time = 3423469
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5460750
+time_consumption of search is 4270633814
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12925966
-resize_time = 3160367
+time_consumption of insert is 11637724880
+resize_time = 3435934
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5440332
+time_consumption of search is 4358036581
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12671227
-resize_time = 3140456
+time_consumption of insert is 11714419900
+resize_time = 3409506
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5440953
+time_consumption of search is 4404036201
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12740251
-resize_time = 3166709
+time_consumption of insert is 11589105986
+resize_time = 3419406
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5359132
+time_consumption of search is 4430064562
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12855185
-resize_time = 3119657
+time_consumption of insert is 11622678677
+resize_time = 3417276
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5350528
+time_consumption of search is 4409540959
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 13433631
-resize_time = 3365276
+time_consumption of insert is 11693762989
+resize_time = 3422293
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5441174
+time_consumption of search is 4516731449
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12772204
-resize_time = 3131057
+time_consumption of insert is 11936242156
+resize_time = 3434314
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5395845
+time_consumption of search is 4289583401
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12910871
-resize_time = 3180533
+time_consumption of insert is 11837191335
+resize_time = 3453195
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5350438
+time_consumption of search is 4397272311
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12792698
-resize_time = 3118481
+time_consumption of insert is 11631294377
+resize_time = 3428713
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5403756
+time_consumption of search is 4405673963
 This test insert number is :10000000
 This test radio is:7
 insert begin 
-time_consumption of insert is 12989398
-resize_time = 3208755
+time_consumption of insert is 12311495149
+resize_time = 3584842
 resize_1_num = 13
 resize_2_num = 8260
 insert all over
-time_consumption of search is 5348677
+time_consumption of search is 4430341360
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 12879450
-resize_time = 3137626
+time_consumption of insert is 11641088563
+resize_time = 3413332
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5376354
+time_consumption of search is 4355735241
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 13163574
-resize_time = 3224021
+time_consumption of insert is 11709866605
+resize_time = 3418941
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5394480
+time_consumption of search is 4348710777
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 12929454
-resize_time = 3186160
+time_consumption of insert is 11609302925
+resize_time = 3408928
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5385058
+time_consumption of search is 4538470422
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 13087968
-resize_time = 3233587
+time_consumption of insert is 11887824911
+resize_time = 3431684
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5327648
+time_consumption of search is 4312699502
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 12964554
-resize_time = 3185878
+time_consumption of insert is 11641048461
+resize_time = 3421626
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5554488
+time_consumption of search is 4371110325
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 12600946
-resize_time = 3144639
+time_consumption of insert is 11616615853
+resize_time = 3413609
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5323337
+time_consumption of search is 4304841467
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 13356983
-resize_time = 3223372
+time_consumption of insert is 11650659653
+resize_time = 3421691
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5386278
+time_consumption of search is 4469926118
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 12533368
-resize_time = 3124823
+time_consumption of insert is 11606885729
+resize_time = 3414924
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5344346
+time_consumption of search is 4454674554
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 12557701
-resize_time = 3124745
+time_consumption of insert is 11663547010
+resize_time = 3398992
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5347279
+time_consumption of search is 4566840640
 This test insert number is :10000000
 This test radio is:8
 insert begin 
-time_consumption of insert is 12873164
-resize_time = 3121487
+time_consumption of insert is 11734593341
+resize_time = 3426453
 resize_1_num = 13
 resize_2_num = 8255
 insert all over
-time_consumption of search is 5527009
+time_consumption of search is 4424370014
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12623458
-resize_time = 3156060
+time_consumption of insert is 11665071547
+resize_time = 3417308
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5392293
+time_consumption of search is 4401454705
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12706561
-resize_time = 3152810
+time_consumption of insert is 11603538754
+resize_time = 3420106
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5275646
+time_consumption of search is 4407840334
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12734202
-resize_time = 3120287
+time_consumption of insert is 11647512706
+resize_time = 3413238
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5466440
+time_consumption of search is 4536721247
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12495029
-resize_time = 3118788
+time_consumption of insert is 17555663285
+resize_time = 5151850
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5266880
+time_consumption of search is 5146399522
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12553583
-resize_time = 3124704
+time_consumption of insert is 12375846062
+resize_time = 3676390
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5322331
+time_consumption of search is 4358189648
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12672259
-resize_time = 3138395
+time_consumption of insert is 11585664694
+resize_time = 3405368
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5267110
+time_consumption of search is 4538424337
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12778465
-resize_time = 3137198
+time_consumption of insert is 11635991029
+resize_time = 3419077
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5395189
+time_consumption of search is 4318449482
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12699467
-resize_time = 3162953
+time_consumption of insert is 11689858152
+resize_time = 3424170
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5314840
+time_consumption of search is 4353117151
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12911955
-resize_time = 3163723
+time_consumption of insert is 11686504908
+resize_time = 3414948
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5447688
+time_consumption of search is 4436428087
 This test insert number is :10000000
 This test radio is:9
 insert begin 
-time_consumption of insert is 12599258
-resize_time = 3139681
+time_consumption of insert is 16632217997
+resize_time = 4868999
 resize_1_num = 13
 resize_2_num = 8266
 insert all over
-time_consumption of search is 5323517
+time_consumption of search is 5189703172
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 12590256
-resize_time = 3141376
+time_consumption of insert is 15947096116
+resize_time = 4680806
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5266645
+time_consumption of search is 5205741911
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 12851964
-resize_time = 3184917
+time_consumption of insert is 12784824598
+resize_time = 3686069
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5371487
+time_consumption of search is 4617498200
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 13101626
-resize_time = 3267547
+time_consumption of insert is 12025454070
+resize_time = 3445671
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5422698
+time_consumption of search is 4493254061
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 12741869
-resize_time = 3146143
+time_consumption of insert is 11603397571
+resize_time = 3414015
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5286373
+time_consumption of search is 4480512704
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 12702392
-resize_time = 3180211
+time_consumption of insert is 12323400428
+resize_time = 3589949
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5323115
+time_consumption of search is 4429964702
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 12752173
-resize_time = 3191255
+time_consumption of insert is 11572052586
+resize_time = 3433784
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5301138
+time_consumption of search is 4391113020
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 13027318
-resize_time = 3226365
+time_consumption of insert is 17125725549
+resize_time = 5003262
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5417709
+time_consumption of search is 5395160197
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 17024695
-resize_time = 3975360
+time_consumption of insert is 14382898385
+resize_time = 4088269
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 6051544
+time_consumption of search is 5778869735
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 17640785
-resize_time = 4139826
+time_consumption of insert is 13940685159
+resize_time = 4077435
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5973807
+time_consumption of search is 4955014124
 This test insert number is :10000000
 This test radio is:10
 insert begin 
-time_consumption of insert is 13685160
-resize_time = 3371333
+time_consumption of insert is 15062784692
+resize_time = 4349888
 resize_1_num = 13
 resize_2_num = 8265
 insert all over
-time_consumption of search is 5455662
+time_consumption of search is 5421593471

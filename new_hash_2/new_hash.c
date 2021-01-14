@@ -109,17 +109,14 @@ Segment * Segment_Split(Segment *seg)
         u64 num = list >> 60;
         if(num == 0){
             //该组bucket为空
-            #ifdef DEBUG_ERROR
-                printf("i = %d, list = 0\n", i);
-            #endif
             continue;
         }
 
         //将元素移动
-        s64 j = num;
+        s64 j;
         u64 new_Segment_index = 15, new_Segment_num = 0, new_list = INIT_LIST;
         u64 new_Segment_slot = 0, cmp_index = 0, slot = 0;
-        while(j >= 1){
+        for(j = num;j >= 1;--j){
             new_Segment_slot = new_Segment_index + start_index;
             cmp_index = (list >> (60 - (j << 2))) & 15;
             slot = start_index + cmp_index;
@@ -135,15 +132,13 @@ Segment * Segment_Split(Segment *seg)
                             + cmp_index 
                             + (list & (0xFFFFFFFFFFFFFFFF << (60 - (j << 2)) << 4));
             }
-            j--;
         }
 
         new_Segment->_[start_index].key = (new_list << 4 >> 4) + (new_Segment_num << 60);
         pmem_persist(&new_Segment->_[start_index].key, sizeof(u64));
         mfence();
 
-        list = (list << 4 >> 4) + ((num - new_Segment_num) << 60);
-        seg->_[start_index].key = list;
+        seg->_[start_index].key = (list << 4 >> 4) + ((num - new_Segment_num) << 60);
         pmem_persist(&seg->_[start_index].key, sizeof(u64));
         mfence();
         #ifdef DEBUG_ERROR

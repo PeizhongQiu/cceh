@@ -158,7 +158,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 {
     Key_t key_hash = hash_64(new_key);
     Key_t dir_index = key_hash >> (key_size - dir->global_depth);
-    u64 start_index = (key_hash & kMask) * kNumPair;
+    u64 start_index = (key_hash & kMask) << 4;
     #ifdef DEBUG_ERROR
         printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,dir_index,start_index,dir->global_depth);
     #endif
@@ -182,38 +182,40 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         
         //更新list和num
         s64 left = 1, right = num, mid = 0;
-        s64 cmp_index = 0, sort_index = 1;
+        s64 sort_index = 1;
         u64 slot_key = 0, slot_hash = 0;
         while(left < right) {
-            mid = (right + left) / 2;
-            cmp_index = (list >> (60 - mid * 4)) & 15;
-            slot = start_index + cmp_index;
+            mid = (right + left) >> 1;
+            slot = start_index + ((list >> (60 - (mid << 2))) & 15);
             slot_key = seg->_[slot].key;
-            if (slot_key == new_key) {
-                return -1;
-            } else if (slot_key < new_key) {
+            if (slot_key < new_key) {
                 left = mid + 1;
             } else if (slot_key > new_key) {
                 right = mid;
             }
-        }
-        if(left > right){
-            //即当num == 0时的情况
-            sort_index = 1;
-        }
-        else if(left == right){
-            cmp_index = (list >> (60 - left * 4)) & 15;
-            slot = start_index + cmp_index;
-            slot_key = seg->_[slot].key;
-            if (slot_key == new_key) {
+            else {
                 return -1;
-            } else if (slot_key < new_key) {
-                sort_index = left + 1;
-            } else if (slot_key > new_key) {
+            }  
+        }
+        if(left == right){
+            slot = start_index + ((list >> (60 - left * 4)) & 15);
+            slot_key = seg->_[slot].key;
+            if (slot_key > new_key) {
                 //left为插入的位置
                 sort_index = left;
             }
+            else if (slot_key < new_key) {
+                sort_index = left + 1;
+            } 
+            else {
+                return -1;
+            }  
         }
+        else if(left > right){
+            //即当num == 0时的情况
+            sort_index = 1;
+        }
+         
         //根据sort_index和insert_index更新0key
         list = (list << 4 >> 4) + ((num + 1) << 60);
         seg->_[start_index].key = ((list >> 4) & (0xFFFFFFFFFFFFFFFF >> (sort_index * 4) >> 4)) 
@@ -336,24 +338,26 @@ int delete_hash(HASH *dir, Key_t search_key)
     u64 cmp_index = 0, slot = 0, slot_key = 0, slot_hash = 0;
 
     while(left <= right) {
-        mid = (right + left) / 2;
-        cmp_index = (list >> (60 - mid * 4)) & 15;
+        mid = (right + left) >> 1;
+        cmp_index = (list >> (60 - (mid << 2))) & 15;
         slot = start_index + cmp_index;
         slot_key = seg->_[slot].key;
 
-        if (slot_key == search_key) {
-            list = (list << 4 >> 4) + ((num - 1) << 60);
-            seg->_[start_index].key = 
-                            ((list << 4) & (0xFFFFFFFFFFFFFFFF >> (mid * 4))) 
-                            + cmp_index 
-                            + (list & (0xFFFFFFFFFFFFFFFF << (60 - mid * 4) << 4));
-            pmem_persist(&seg->_[start_index].key, sizeof(u64));
-            mfence();
-            return 1;
-        } else if (slot_key < search_key) {
+        if (slot_key < search_key) {
             left = mid + 1;
         } else if (slot_key > search_key) {
             right = mid - 1;
+        }
+        else {
+            //slot_key == search_key
+            list = (list << 4 >> 4) + ((num - 1) << 60);
+            seg->_[start_index].key = 
+                            ((list << 4) & (0xFFFFFFFFFFFFFFFF >> ((mid << 2)))) 
+                            + cmp_index 
+                            + (list & (0xFFFFFFFFFFFFFFFF << (60 - (mid << 2)) << 4));
+            pmem_persist(&seg->_[start_index].key, sizeof(u64));
+            mfence();
+            return 1;
         }
     }
     return NONE;
@@ -368,10 +372,9 @@ Value_t search_hash(HASH *dir, Key_t search_key)
     Segment *seg = dir->_->_[dir_index];
     u64 list = seg->_[start_index].key;
     u64 num = list >> 60;
-    if(num == 0) return NONE;
 
     s64 left = 1, right = num, mid = 0;
-    u64 slot = 0, slot_key = 0, slot_hash = 0;
+    u64 slot = 0, slot_key = 0;
     while(left <= right) {
         mid = (right + left) >> 1;
         slot = start_index + ((list >> (60 - (mid << 2))) & 15);

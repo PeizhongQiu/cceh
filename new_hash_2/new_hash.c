@@ -107,7 +107,6 @@ Segment * Segment_Split(Segment *seg)
         u64 start_index = i * kNumPair;
         u64 list = seg->_[start_index].key;
         u64 num = list >> 60;
-        u64 old_list = list;
         if(num == 0){
             //该组bucket为空
             #ifdef DEBUG_ERROR
@@ -370,6 +369,9 @@ Value_t search_hash(HASH *dir, Key_t search_key)
 
     Segment *seg = dir->_->_[dir_index];
     u64 list = seg->_[start_index].key;
+    #ifdef DEBUG_ERROR
+        printf("list = %016llx\n",list);
+    #endif
     u64 num = list >> 60;
     if(num == 0) return NONE;
 

@@ -374,7 +374,8 @@ Value_t search_hash(HASH *dir, Key_t search_key)
     u64 slot = 0, slot_key = 0, slot_hash = 0;
     while(left <= right) {
         mid = (right + left) / 2;
-        slot_key = seg->_[start_index + ((list >> (60 - mid * 4)) & 15)].key;
+        slot = start_index + ((list >> (60 - mid * 4)) & 15);
+        slot_key = seg->_[slot].key;
         if (slot_key < search_key) {
             left = mid + 1;
         } else if (slot_key > search_key) {

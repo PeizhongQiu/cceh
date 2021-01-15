@@ -213,7 +213,7 @@ int main()
                     mid = (left + right) >> 1;
                     c = a->_[i*16 + mid];
                     if(c < 6)
-                        left = mid;
+                        left = mid + 1;
                     else right = mid - 1;
                 }
             }

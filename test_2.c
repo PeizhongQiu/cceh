@@ -193,8 +193,6 @@ int main()
             for(i = 0; i < 1024; i++){
                 for(j = 0; j < 8; j++)
                     c = a->_[i*16 + 2*j];
-                for(j = 0; j < 8; j++)
-                    c = a->_[i*16 + 2*j + 1];
             }
         mfence();
         clock_gettime(CLOCK_MONOTONIC, &end);

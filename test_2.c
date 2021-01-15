@@ -5,6 +5,19 @@
 
 typedef unsigned long long u64;
 
+
+void clear_cache() {
+    int* dummy = malloc(1024*1024*256*sizeof(int));
+    for (int i=0; i<1024*1024*256; i++) {
+	    dummy[i] = i;
+    }
+
+    for (int i=100;i<1024*1024*256;i++) {
+	    dummy[i] = dummy[i-rand()%100] + dummy[i+rand()%100];
+    }
+    free(dummy);
+}
+
 #define asm_mfence()                \
 ({                      \
     __asm__ __volatile__ ("mfence":::"memory");    \
@@ -40,15 +53,16 @@ int main()
 {
     size_t mapped_len;
     struct test *a = add_pmalloc(sizeof(struct test),&mapped_len);
-    struct timeval start, end;
     u64 c;
 
     u64 i,j,k,l;
     long long time_consumption = 0;
     for(k = 0; k < 10; k++){
-
+        struct timespec start, end;
+        long long time_consumption = 0;
+        clear_cache();
         mfence();
-        gettimeofday(&start, NULL);
+        clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
         for(l = 0; l < 1000; l++)
             for(i = 0; i < 1024 * 16; i++){
@@ -57,13 +71,14 @@ int main()
                 mfence();
             }
         mfence();
-        gettimeofday(&end, NULL);
+        clock_gettime(CLOCK_MONOTONIC, &end);
         mfence();
-        time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
         printf("time_consumption of 1-w is %lld\n", time_consumption);
 
+        clear_cache();
         mfence();
-        gettimeofday(&start, NULL);
+        clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
         for(l = 0; l < 1000; l++)
             for(i = 0; i < 1024 * 16; i++){
@@ -75,8 +90,9 @@ int main()
         time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
         printf("time_consumption of 1-r is %lld\n", time_consumption);
 
+        clear_cache();
         mfence();
-        gettimeofday(&start, NULL);
+        clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
         for(l = 0; l < 1000; l++)    
             for(i = 0; i < 1024; i++){
@@ -92,8 +108,9 @@ int main()
         time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
         printf("time_consumption of 2-w is %lld\n", time_consumption);
 
+        clear_cache();
         mfence();
-        gettimeofday(&start, NULL);
+        clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
         for(l = 0; l < 1000; l++)  
             for(i = 0; i < 1024; i++){
@@ -107,8 +124,9 @@ int main()
         time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
         printf("time_consumption of 2-r is %lld\n", time_consumption);
 
+        clear_cache();
         mfence();
-        gettimeofday(&start, NULL);
+        clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
         for(l = 0; l < 1000; l++)  
             for(i = 0; i < 1024; i++){
@@ -167,8 +185,9 @@ int main()
         time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
         printf("time_consumption of 3-w is %lld\n", time_consumption);
 
+        clear_cache();
         mfence();
-        gettimeofday(&start, NULL);
+        clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
         for(l = 0; l < 1000; l++)  
             for(i = 0; i < 1024; i++){
@@ -182,5 +201,28 @@ int main()
         mfence();
         time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
         printf("time_consumption of 3-r is %lld\n", time_consumption);
+
+        clear_cache();
+        mfence();
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        mfence();
+        for(l = 0; l < 1000; l++)  
+            for(i = 0; i < 1024; i++){
+                int left = 1, right = 15, mid = 0;
+                while(left <= right){
+                    mid = (left + right) >> 1;
+                    c = a->_[i*16 + mid];
+                    if(c < 6)
+                        left = mid;
+                    else right = mid - 1;
+                }
+            }
+        mfence();
+        gettimeofday(&end, NULL);
+        mfence();
+        time_consumption = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+        printf("time_consumption of 4-r is %lld\n", time_consumption);
+
     }
+    return 0;
 }

@@ -222,6 +222,35 @@ int main()
         time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
         printf("time_consumption of 4-r is %lld\n", time_consumption);
 
+        clear_cache();
+        mfence();
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        mfence();
+        for(l = 0; l < 1000; l++)  
+            for(i = 0; i < 1024; i++){
+                c = a->_[i*16 + 0];
+                c = a->_[i*16 + 1];
+                c = a->_[i*16 + 2];
+                c = a->_[i*16 + 3];
+                c = a->_[i*16 + 4];
+                c = a->_[i*16 + 5];
+                c = a->_[i*16 + 6];
+                c = a->_[i*16 + 7];
+                c = a->_[i*16 + 8];
+                c = a->_[i*16 + 9];
+                c = a->_[i*16 + 10];
+                c = a->_[i*16 + 11];
+                c = a->_[i*16 + 12];
+                c = a->_[i*16 + 13];
+                c = a->_[i*16 + 14];
+                c = a->_[i*16 + 15];
+            }
+        mfence();
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        mfence();
+        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+        printf("time_consumption of 5-r is %lld\n", time_consumption);
+
     }
     return 0;
 }

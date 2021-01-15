@@ -70,7 +70,7 @@ int main()
         mfence();
         clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
-        for(l = 0; l < 100; l++){
+        for(l = 0; l < 1000; l++){
             for(i = 0; i < 1024 * 16; i++){
                 c = a->_[i/16][i];
             }
@@ -86,7 +86,7 @@ int main()
         mfence();
         clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
-        for(l = 0; l < 100; l++){
+        for(l = 0; l < 1000; l++){
             for(i = 0; i < 1024; i++){
                 for(j = 0; j < 16; j++){
                     c = a->_[i][i*16 + j];
@@ -103,7 +103,7 @@ int main()
         mfence();
         clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
-        for(l = 0; l < 100; l++){
+        for(l = 0; l < 1000; l++){
             for(i = 0; i < 1024; i++){
                 for(j = 0; j < 8; j++)
                     c = a->_[i][i*16 + 2*j];
@@ -119,7 +119,7 @@ int main()
         mfence();
         clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
-        for(l = 0; l < 100; l++){
+        for(l = 0; l < 1000; l++){
             for(i = 0; i < 1024; i++){
                 c = a->_[i][i*16];
                 int left = 1, right = 15, mid = 0;
@@ -142,7 +142,7 @@ int main()
         mfence();
         clock_gettime(CLOCK_MONOTONIC, &start);
         mfence();
-        for(l = 0; l < 100; l++){
+        for(l = 0; l < 1000; l++){
             for(i = 0; i < 1024; i++){
                 c = a->_[i][i*16 + 0];
                 c = a->_[i][i*16 + 1];

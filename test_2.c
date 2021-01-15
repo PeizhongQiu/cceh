@@ -46,7 +46,7 @@ void *add_pmalloc(size_t size, size_t *mapped_len)
 }
 
 struct test{
-    u64 _[1024*16];
+    u64 _[1024][1024*16];
 };
 
 int main()
@@ -56,199 +56,119 @@ int main()
     u64 c;
 
     u64 i,j,k,l;
-    long long time_consumption = 0;
     for(k = 0; k < 10; k++){
         struct timespec start, end;
-        long long time_consumption = 0;
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)
-            for(i = 0; i < 1024 * 16; i++){
-                a->_[i] = 1;
-                pmem_persist(&a->_[i], sizeof(a->_[i]));
-                mfence();
-            }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
-        printf("time_consumption of 1-w is %lld\n", time_consumption);
+        
+        for(i = 0; i < 1024 * 16; i++){
+            a->_[i/16][i] = i%16;
+            pmem_persist(&a->_[i/16][i], sizeof(a->_[i/16][i]));
+            mfence();
+        }
 
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)
+        long long time_consumption = 0;
+        for(l = 0; l < 1000; l++){
+            clear_cache();
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &start);
+            mfence();
             for(i = 0; i < 1024 * 16; i++){
-                c = a->_[i];
+                c = a->_[i/16][i];
             }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            mfence();
+            time_consumption += (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+        }
         printf("time_consumption of 1-r is %lld\n", time_consumption);
 
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)    
+        time_consumption = 0;
+        for(l = 0; l < 1000; l++){
+            clear_cache();
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &start);
+            mfence();
             for(i = 0; i < 1024; i++){
                 for(j = 0; j < 16; j++){
-                    a->_[i*16 + j] = 1;
-                    pmem_persist(&a->_[i*16 + j], sizeof(a->_[i*16 + j]));
-                    mfence();
+                    c = a->_[i][i*16 + j];
                 }
             }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
-        printf("time_consumption of 2-w is %lld\n", time_consumption);
-
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)  
-            for(i = 0; i < 1024; i++){
-                for(j = 0; j < 16; j++){
-                    c = a->_[i*16 + j];
-                }
-            }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            mfence();
+            time_consumption += (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+        }
         printf("time_consumption of 2-r is %lld\n", time_consumption);
 
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)  
-            for(i = 0; i < 1024; i++){
-                a->_[i*16 + 0] = 1;
-                pmem_persist(&a->_[i*16 + 0], sizeof(a->_[i*16 + 0]));
-                mfence();
-                a->_[i*16 + 2] = 2;
-                pmem_persist(&a->_[i*16 + 2], sizeof(a->_[i*16 + 2]));
-                mfence();
-                a->_[i*16 + 4] = 3;
-                pmem_persist(&a->_[i*16 + 4], sizeof(a->_[i*16 + 4]));
-                mfence();
-                a->_[i*16 + 6] = 4;
-                pmem_persist(&a->_[i*16 + 6], sizeof(a->_[i*16 + 6]));
-                mfence();
-                a->_[i*16 + 8] = 5;
-                pmem_persist(&a->_[i*16 + 8], sizeof(a->_[i*16 + 8]));
-                mfence();
-                a->_[i*16 + 10] = 6;
-                pmem_persist(&a->_[i*16 + 10], sizeof(a->_[i*16 + 10]));
-                mfence();
-                a->_[i*16 + 12] = 7;
-                pmem_persist(&a->_[i*16 + 12], sizeof(a->_[i*16 + 12]));
-                mfence();
-                a->_[i*16 + 14] = 8;
-                pmem_persist(&a->_[i*16 + 14], sizeof(a->_[i*16 + 14]));
-                mfence();
-                a->_[i*16 + 1] = 9;
-                pmem_persist(&a->_[i*16 + 1], sizeof(a->_[i*16 + 1]));
-                mfence();
-                a->_[i*16 + 3] = 10;
-                pmem_persist(&a->_[i*16 + 3], sizeof(a->_[i*16 + 3]));
-                mfence();
-                a->_[i*16 + 5] = 11;
-                pmem_persist(&a->_[i*16 + 5], sizeof(a->_[i*16 + 5]));
-                mfence();
-                a->_[i*16 + 7] = 12;
-                pmem_persist(&a->_[i*16 + 7], sizeof(a->_[i*16 + 7]));
-                mfence();
-                a->_[i*16 + 9] = 13;
-                pmem_persist(&a->_[i*16 + 9], sizeof(a->_[i*16 + 9]));
-                mfence();
-                a->_[i*16 + 11] = 14;
-                pmem_persist(&a->_[i*16 + 11], sizeof(a->_[i*16 + 11]));
-                mfence();
-                a->_[i*16 + 13] = 15;
-                pmem_persist(&a->_[i*16 + 13], sizeof(a->_[i*16 + 13]));
-                mfence();
-                a->_[i*16 + 15] = 16;
-                pmem_persist(&a->_[i*16 + 15], sizeof(a->_[i*16 + 15]));
-                mfence();
-            }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
-        printf("time_consumption of 3-w is %lld\n", time_consumption);
-
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)  
+        time_consumption = 0;
+        for(l = 0; l < 1000; l++){
+            clear_cache();
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &start);
+            mfence();
             for(i = 0; i < 1024; i++){
                 for(j = 0; j < 8; j++)
-                    c = a->_[i*16 + 2*j];
+                    c = a->_[i][i*16 + 2*j];
             }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            mfence();
+            time_consumption += (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+        }
         printf("time_consumption of 3-r is %lld\n", time_consumption);
 
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)  
+        time_consumption = 0;
+        for(l = 0; l < 1000; l++){
+            clear_cache();
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &start);
+            mfence();
             for(i = 0; i < 1024; i++){
-                c = a->_[i*16];
+                c = a->_[i][i*16];
                 int left = 1, right = 15, mid = 0;
                 while(left <= right){
                     mid = (left + right) >> 1;
-                    c = a->_[i*16 + mid];
+                    c = a->_[i][i*16 + mid];
                     if(c < 6)
                         left = mid + 1;
                     else right = mid - 1;
                 }
             }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            mfence();
+            time_consumption += (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+        }
         printf("time_consumption of 4-r is %lld\n", time_consumption);
 
-        clear_cache();
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        mfence();
-        for(l = 0; l < 1000; l++)  
+        time_consumption = 0;
+        for(l = 0; l < 1000; l++){
+            clear_cache();
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &start);
+            mfence();
             for(i = 0; i < 1024; i++){
-                c = a->_[i*16 + 0];
-                c = a->_[i*16 + 1];
-                c = a->_[i*16 + 2];
-                c = a->_[i*16 + 3];
-                c = a->_[i*16 + 4];
-                c = a->_[i*16 + 5];
-                c = a->_[i*16 + 6];
-                c = a->_[i*16 + 7];
-                c = a->_[i*16 + 8];
-                c = a->_[i*16 + 9];
-                c = a->_[i*16 + 10];
-                c = a->_[i*16 + 11];
-                c = a->_[i*16 + 12];
-                c = a->_[i*16 + 13];
-                c = a->_[i*16 + 14];
-                c = a->_[i*16 + 15];
+                c = a->_[i][i*16 + 0];
+                c = a->_[i][i*16 + 1];
+                c = a->_[i][i*16 + 2];
+                c = a->_[i][i*16 + 3];
+                c = a->_[i][i*16 + 4];
+                c = a->_[i][i*16 + 5];
+                c = a->_[i][i*16 + 6];
+                c = a->_[i][i*16 + 7];
+                c = a->_[i][i*16 + 8];
+                c = a->_[i][i*16 + 9];
+                c = a->_[i][i*16 + 10];
+                c = a->_[i][i*16 + 11];
+                c = a->_[i][i*16 + 12];
+                c = a->_[i][i*16 + 13];
+                c = a->_[i][i*16 + 14];
+                c = a->_[i][i*16 + 15];
             }
-        mfence();
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        mfence();
-        time_consumption = (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+            mfence();
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            mfence();
+            time_consumption += (end.tv_sec - start.tv_sec)*1000000000 + (end.tv_nsec - start.tv_nsec);
+        }
         printf("time_consumption of 5-r is %lld\n", time_consumption);
 
     }

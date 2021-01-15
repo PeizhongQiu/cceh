@@ -206,6 +206,7 @@ int main()
         mfence();
         for(l = 0; l < 1000; l++)  
             for(i = 0; i < 1024; i++){
+                c = a->_[i*16];
                 int left = 1, right = 15, mid = 0;
                 while(left <= right){
                     mid = (left + right) >> 1;

@@ -31,7 +31,7 @@ void mfence()
 
 void *add_pmalloc(size_t size, size_t *mapped_len)
 {
-	char path[100] = "/mnt/dax_200g/test_2";
+	char path[100] = "/mnt/dax_200g/test";
 	
 	void *addr;
 	int is_pmem;
@@ -66,7 +66,7 @@ int main()
         }
 
         long long time_consumption = 0;
-        for(l = 0; l < 1000; l++){
+        for(l = 0; l < 10; l++){
             clear_cache();
             mfence();
             clock_gettime(CLOCK_MONOTONIC, &start);
@@ -82,7 +82,7 @@ int main()
         printf("time_consumption of 1-r is %lld\n", time_consumption);
 
         time_consumption = 0;
-        for(l = 0; l < 1000; l++){
+        for(l = 0; l < 10; l++){
             clear_cache();
             mfence();
             clock_gettime(CLOCK_MONOTONIC, &start);
@@ -100,7 +100,7 @@ int main()
         printf("time_consumption of 2-r is %lld\n", time_consumption);
 
         time_consumption = 0;
-        for(l = 0; l < 1000; l++){
+        for(l = 0; l < 10; l++){
             clear_cache();
             mfence();
             clock_gettime(CLOCK_MONOTONIC, &start);
@@ -117,7 +117,7 @@ int main()
         printf("time_consumption of 3-r is %lld\n", time_consumption);
 
         time_consumption = 0;
-        for(l = 0; l < 1000; l++){
+        for(l = 0; l < 10; l++){
             clear_cache();
             mfence();
             clock_gettime(CLOCK_MONOTONIC, &start);
@@ -141,7 +141,7 @@ int main()
         printf("time_consumption of 4-r is %lld\n", time_consumption);
 
         time_consumption = 0;
-        for(l = 0; l < 1000; l++){
+        for(l = 0; l < 10; l++){
             clear_cache();
             mfence();
             clock_gettime(CLOCK_MONOTONIC, &start);

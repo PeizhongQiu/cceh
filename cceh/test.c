@@ -3,11 +3,12 @@
 
 void clear_cache() {
     int* dummy = malloc(1024*1024*256*sizeof(int));
-    for (int i=0; i<1024*1024*256; i++) {
+    int i;
+    for ( i=0; i<1024*1024*256; i++) {
 	    dummy[i] = i;
     }
 
-    for (int i=100;i<1024*1024*256;i++) {
+    for ( i=100;i<1024*1024*256;i++) {
 	    dummy[i] = dummy[i-rand()%100] + dummy[i+rand()%100];
     }
     free(dummy);

@@ -109,7 +109,7 @@ Segment * Segment_Split(Segment *seg)
             size_t pattern = re_hash_key >> (key_size - new_Segment->local_depth);
             if (pattern == new_Segment->pattern)
             {
-                u64 Segment_index = (re_hash_key & kMask) * kNumPairPerCacheLine;
+                u64 Segment_index = ((re_hash_key >> (key_size - new_Segment->local_depth - kSegmentBits)) & kMask) * kNumPairPerCacheLine;
                 unsigned j;
                 for (j = 0; j < kNumPairPerCacheLine * kNumCacheLine; ++j)
                 {
@@ -134,11 +134,12 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     Key_t key_hash = hash_64(new_key);
 
     Key_t x = (key_hash >> (key_size - dir->global_depth));
-    u64 y = (key_hash & kMask) * kNumPairPerCacheLine;
+    
     #ifdef DEBUG_ERROR
         printf("key = %016x, key_hash = %016llx, x = %016llx, y = %016llx global_depth = %d\n",new_key,key_hash,x,y,dir->global_depth);
     #endif
     Segment *seg = dir->_->_[x];
+    u64 y = ((key_hash >> (key_size - seg->local_depth - kSegmentBits)) & kMask) * kNumPairPerCacheLine;
     unsigned i;
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)
     {
@@ -259,9 +260,10 @@ int delete_hash(HASH *dir, Key_t search_key)
 {
     Key_t key_hash = hash_64(search_key);
     Key_t x = (key_hash >> (key_size - dir->global_depth));
-    u64 y = (key_hash & kMask) * kNumPairPerCacheLine;
 
     Segment *seg = dir->_->_[x];
+    u64 y = ((key_hash >> (key_size - seg->local_depth - kSegmentBits)) & kMask) * kNumPairPerCacheLine;
+    
     unsigned i;
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)
     {
@@ -282,9 +284,10 @@ Value_t search_hash(HASH *dir, Key_t search_key)
 {
     Key_t key_hash = hash_64(search_key);
     Key_t x = (key_hash >> (key_size - dir->global_depth));
-    u64 y = (key_hash & kMask) * kNumPairPerCacheLine;
 
     Segment *seg = dir->_->_[x];
+    u64 y = ((key_hash >> (key_size - seg->local_depth - kSegmentBits)) & kMask) * kNumPairPerCacheLine;
+    
     unsigned i;
     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)
     {

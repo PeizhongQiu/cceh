@@ -109,16 +109,8 @@ Segment * Segment_Split(Segment *seg)
             size_t pattern = re_hash_key >> (key_size - new_Segment->local_depth);
             if (pattern == new_Segment->pattern)
             {
-                unsigned j;
-                for (j = 0; j < kNumSlot; ++j)
-                {
-                    if (new_Segment->_[j].key == INVALID)
-                    {
-                        new_Segment->_[j].value = seg->_[i].value;
-                        new_Segment->_[j].key = seg->_[i].key;
-                        break;
-                    }
-                }
+                new_Segment->_[i].value = seg->_[i].value;
+                new_Segment->_[i].key = seg->_[i].key;     
             }
         }
     }
@@ -191,10 +183,6 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         ++dir->global_depth;
         pmem_persist(dir, sizeof(HASH));
         mfence();
-        //printf("new_Segment %p\n", new_Segment);
-        /*	for (i = 0; i < (1 << dir->global_depth); ++i) {
-			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
-		}*/
         // #ifdef DEBUG_TIME
         //     mfence();
         //     gettimeofday(&end, NULL);
@@ -214,9 +202,6 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         #ifdef DEBUG_ERROR
             printf("split 2 begin...\n");
         #endif
-        /*for (i = 0; i < (1 << dir->global_depth); ++i) {
-			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
-		}*/
         Segment *new_Segment = Segment_Split(seg);
 
         for (i = 0; i < (1 << (dir->global_depth - new_Segment->local_depth)); ++i)

@@ -31,7 +31,8 @@ int main(int argc, char *argv[])
         range[i] = i;
 
     printf("insert begin \n");
-    srand(time(NULL));
+    //srand(time(NULL));
+    srand(NULL);
     for (i = 0; i < RANGE_NUM; ++i)
     {
         u64 temp = range[i];

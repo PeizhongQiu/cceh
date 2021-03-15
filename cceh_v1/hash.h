@@ -42,18 +42,16 @@ typedef struct Segment
 {
     Pair _[kNumSlot];
     size_t local_depth;
-    //int64_t sema = 0;
-    size_t pattern; //Segent对应的匹配
 } Segment;
 
 typedef struct Directory
 {
     Segment **_;   
+    size_t global_depth;
 } Directory;
 
 typedef struct HASH
 {
-    size_t global_depth;
     Directory *_;
 } HASH;
 

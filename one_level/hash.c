@@ -76,9 +76,7 @@ Segment * Segment_Split(Segment *seg)
 
     u64 pattern = ((size_t)1 << (key_size - seg->local_depth - 1));
     new_Segment->local_depth = seg->local_depth + 1;
-    #ifdef DEBUG_ERROR
-        printf("new_Segment=%p, local_depth=%d, pattern=%d\n", new_Segment,new_Segment->local_depth,new_Segment->pattern);
-    #endif
+    
     int i;
     for (i = 0; i < kNumSlot; ++i)
     {
@@ -248,26 +246,6 @@ Value_t search_hash(HASH *dir, Key_t search_key)
     }
     return NONE;
 }
-
-// int update_hash(HASH *dir, Key_t search_key, Value_t new_value)
-// {
-//     u32 key_hash = hash_32(search_key, 32);
-//     u32 x = (key_hash >> (key_size - dir->global_depth));
-//     u32 y = (key_hash & kMask) * kNumPairPerCacheLine * kNumCacheLine;
-
-//     Segment *seg = dir->_->_[x];
-//     unsigned i;
-//     for (i = 0; i < kNumPairPerCacheLine * kNumCacheLine; ++i)
-//     {
-//         u32 slot = (y + i) % kNumSlot;
-//         if (seg->_[slot].key == search_key)
-//         {
-//             seg->_[slot].value = new_value;
-//             return 1;
-//         }
-//     }
-//     return NONE;
-// }
 
 void init(HASH *o_hash)
 {

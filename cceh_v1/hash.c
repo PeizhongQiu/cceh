@@ -286,10 +286,8 @@ void init(HASH *o_hash)
     init_dir->_[0] = getNode(HASH_SEGMENT, 0);
     memset(init_dir->_[0], -1, sizeof(Segment));
     init_dir->_[0]->local_depth = 1;
-    init_dir->_[0]->pattern = 0;
 
     init_dir->_[1] = getNode(HASH_SEGMENT, 0);
     memset(init_dir->_[1], -1, sizeof(Segment));
     init_dir->_[1]->local_depth = 1;
-    init_dir->_[1]->pattern = 1;
 }

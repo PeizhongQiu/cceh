@@ -144,13 +144,13 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     if (seg->local_depth == dir->global_depth)
     {
         //分配一个新的Segment
-        // #ifdef DEBUG_TIME
-        //     ++resize_1_num;
-        //     struct timeval start, end;
-        //     mfence();
-        //     gettimeofday(&start, NULL);
-        //     mfence();
-        // #endif
+        #ifdef DEBUG_TIME
+            ++resize_1_num;
+            struct timeval start, end;
+            mfence();
+            gettimeofday(&start, NULL);
+            mfence();
+        #endif
         #ifdef DEBUG_ERROR
             printf("split 1 begin...\n");
         #endif
@@ -179,22 +179,22 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         ++dir->global_depth;
         pmem_persist(dir, sizeof(HASH));
         mfence();
-        // #ifdef DEBUG_TIME
-        //     mfence();
-        //     gettimeofday(&end, NULL);
-        //     mfence();
-        //     resize_time += (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-        // #endif
+        #ifdef DEBUG_TIME
+            mfence();
+            gettimeofday(&end, NULL);
+            mfence();
+            resize_time += (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+        #endif
     }
     else
     {
-        // #ifdef DEBUG_TIME
-        //     resize_2_num++;
-        //     struct timeval start, end;
-        //     mfence();
-        //     gettimeofday(&start, NULL);
-        //     mfence();
-        // #endif
+        #ifdef DEBUG_TIME
+            resize_2_num++;
+            struct timeval start, end;
+            mfence();
+            gettimeofday(&start, NULL);
+            mfence();
+        #endif
         #ifdef DEBUG_ERROR
             printf("split 2 begin...\n");
         #endif
@@ -214,12 +214,12 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         /*	for (i = 0; i < (1 << dir->global_depth); ++i) {
 			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}*/
-        // #ifdef DEBUG_TIME
-        //     mfence();
-        //     gettimeofday(&end, NULL);
-        //     mfence();
-        //     resize_time += (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-        // #endif
+        #ifdef DEBUG_TIME
+            mfence();
+            gettimeofday(&end, NULL);
+            mfence();
+            resize_time += (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+        #endif
     }
     return insert_hash(dir, new_key, new_value);
 }

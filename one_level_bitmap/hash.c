@@ -121,10 +121,12 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
     {
         u64 insert_index = fastLog2((~bitmap) & fullBitmap);
         seg->_[insert_index].value = new_value;
-        mfence();
         seg->_[insert_index].key = new_key;
+        mfence();
         pmem_persist(&seg->_[insert_index], sizeof(Pair));
+
         seg->bitmap = bitmap | (1 << insert_index);
+        mfence();
         pmem_persist(&seg->bitmap, sizeof(u64));
         return 1;
     }

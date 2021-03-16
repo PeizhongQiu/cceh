@@ -29,16 +29,17 @@ typedef struct Pair
     Value_t value;
 } Pair;
 
-#define kNumSlot 16
+#define kNumSlot 15
 #define initBitmap 0x0
-#define fullBitmap 0xFFFF
+#define fullBitmap 0x7FFF
 #define key_size (8 * sizeof(size_t))
 
 typedef struct Segment
 {
-    Pair _[kNumSlot];
     size_t local_depth;
     u64 bitmap;
+    Pair _[kNumSlot];
+    
 } Segment;
 
 typedef struct Directory

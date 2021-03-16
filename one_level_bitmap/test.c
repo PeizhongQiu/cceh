@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
         
         int ok = insert_hash(&o_hash, range[i], i + 1);
         
-        //#ifdef DEBUG_ERROR
+        #ifdef DEBUG_ERROR
         int j;
         for (j = 0; j < i; ++j)
         {
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
                 return 0;
             }
         }
-        //#endif
+        #endif
     }
     mfence();
     clock_gettime(CLOCK_MONOTONIC, &end);

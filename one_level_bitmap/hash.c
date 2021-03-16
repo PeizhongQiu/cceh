@@ -123,7 +123,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         seg->_[insert_index].value = new_value;
         mfence();
         seg->_[insert_index].key = new_key;
-        pmem_persist(&seg->_[i], sizeof(Pair));
+        pmem_persist(&seg->_[insert_index], sizeof(Pair));
         seg->bitmap = bitmap | (1 << insert_index);
         pmem_persist(&seg->bitmap, sizeof(u64));
         return 1;

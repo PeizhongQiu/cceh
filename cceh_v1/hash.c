@@ -130,8 +130,9 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         {
             seg->_[slot].value = new_value;
             mfence();
+            pmem_persist(&seg->_[slot].value, sizeof(u64));
             seg->_[slot].key = new_key;
-            pmem_persist(&seg->_[slot], sizeof(Pair));
+            pmem_persist(&seg->_[slot].key, sizeof(u64));
             
             //print(dir);
             return 1;
@@ -221,7 +222,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         /*	for (i = 0; i < (1 << dir->global_depth); ++i) {
 			printf("%p %x\n", dir->_->_[i],dir->_->_[i]->pattern);
 		}*/
-        pmem_persist(seg, sizeof(Segment));
+        pmem_persist(&seg->local_depth, sizeof(size_t));
         mfence();
         #ifdef DEBUG_TIME
             mfence();
@@ -247,8 +248,8 @@ int delete_hash(HASH *dir, Key_t search_key)
         if (seg->_[slot].key == search_key)
         {
             seg->_[slot].key = INVALID;
-            pmem_persist(&seg->_[slot].key, sizeof(Key_t));
             mfence();
+            pmem_persist(&seg->_[slot].key, sizeof(Key_t));
             //            free(seg->_[slot].value);
             return 1;
         }

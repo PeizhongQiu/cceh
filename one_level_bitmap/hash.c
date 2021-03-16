@@ -119,7 +119,7 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
     if(bitmap != fullBitmap)
     {
-        u64 insert_index = fastLog2((~bitmap) & fullBitmap);
+        u64 insert_index = fastLog2((~bitmap) & -(~bitmap));
         seg->_[insert_index].value = new_value;
         seg->_[insert_index].key = new_key;
         mfence();

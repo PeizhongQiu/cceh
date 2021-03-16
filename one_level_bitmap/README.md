@@ -5,4 +5,7 @@ insert：通过segment中的位图直接判断哪个位置有空缺，最简单�
 
 resize：位图全为0即为满，判断local_depth和global_depth大小。
         local < global 创建new_seg，并将要old_seg中的元素符合条件的插入到new_seg，更改dir的指针，更新old_seg中的位图，最后更新old_seg的local_depth
-        local = global 
+        local = global 创建new_seg,创建new_dir,更新new_dir，更新指向dir的指针，更新old_seg的位图和local_depth
+
+search 配合位图直接找
+delete 配合位图

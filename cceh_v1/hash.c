@@ -130,9 +130,10 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         {
             seg->_[slot].value = new_value;
             mfence();
-            pmem_persist(&seg->_[slot].value, sizeof(u64));
+            //pmem_persist(&seg->_[slot].value, sizeof(u64));
             seg->_[slot].key = new_key;
-            pmem_persist(&seg->_[slot].key, sizeof(u64));
+            //pmem_persist(&seg->_[slot].key, sizeof(u64));
+            pmem_persist(&seg->_[slot],sizeof(Pair));
             
             //print(dir);
             return 1;

@@ -123,11 +123,12 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
         seg->_[insert_index].value = new_value;
         seg->_[insert_index].key = new_key;
         mfence();
-        pmem_persist(&seg->_[insert_index], sizeof(Pair));
+        //pmem_persist(&seg->_[insert_index], sizeof(Pair));
 
         seg->bitmap = bitmap | (1 << insert_index);
         mfence();
-        pmem_persist(&seg->bitmap, sizeof(u64));
+        //pmem_persist(&seg->bitmap, sizeof(u64));
+        pmem_persist(seg, sizeof(Segment));
         return 1;
     }
 
@@ -170,11 +171,12 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
         seg->bitmap = fullBitmap - new_Segment->bitmap;
         mfence();
-        pmem_persist(&seg->local_depth, sizeof(size_t));
+        //pmem_persist(&seg->local_depth, sizeof(size_t));
 
         ++seg->local_depth;
         mfence();
-        pmem_persist(&seg->local_depth, sizeof(size_t));
+        //pmem_persist(&seg->local_depth, sizeof(size_t));
+        pmem_persist(seg, sizeof(Segment));
         // #ifdef DEBUG_TIME
         //     mfence();
         //     gettimeofday(&end, NULL);
@@ -209,7 +211,6 @@ int insert_hash(HASH *dir, Key_t new_key, Value_t new_value)
 
         seg->bitmap = fullBitmap - new_Segment->bitmap;
         mfence();
-        pmem_persist(&seg->local_depth, sizeof(size_t));
         
         ++seg->local_depth;
         //printf("new_Segment %p\n", new_Segment);
